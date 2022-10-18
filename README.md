@@ -6,26 +6,19 @@ Les instructions sont disponibles [ici](https://github.com/Faylixe/ceri-m1-ecomm
 
 ## Dream team
 
-> :warning: Veuillez remplir le nom de votre équipe avant la fin de
-> la première séance. L'identifiant vous sera renseigné via une
-> Pull Request plus tard.
-
 |             |        |
 | ----------- | ------ |
 | Nom         | ATMANI Yasser |
-| Identifiant | _FILL_ |
+| Identifiant | YasserAtmani |
 | Nom         | EL HAJOUI Mohamed |
-| Identifiant | _FILL_ |
+| Identifiant | MohamedEHJ |
 | Nom         | LESZCZYNSKI Tom |
-| Identifiant | _FILL_ |
+| Identifiant | LeszczyTom |
 
 
 <br>
 
 ### Staff
-
-> :warning: Veuillez remplir la section suivante avec les membres de
-> votre équipe.
 
 | Role                      | Membre |
 | ------------------------- | ------ |
