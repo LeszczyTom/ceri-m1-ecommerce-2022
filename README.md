@@ -12,8 +12,15 @@ Les instructions sont disponibles [ici](https://github.com/Faylixe/ceri-m1-ecomm
 
 |             |        |
 | ----------- | ------ |
-| Nom         | _FILL_ |
+| Nom         | ATMANI Yasser |
 | Identifiant | _FILL_ |
+| ----------- | ------ |
+| Nom         | EL HAJOUI Mohamed |
+| Identifiant | _FILL_ |
+| ----------- | ------ |
+| Nom         | LESZCZYNSKI Tom |
+| Identifiant | _FILL_ |
+
 
 <br>
 
@@ -24,6 +31,6 @@ Les instructions sont disponibles [ici](https://github.com/Faylixe/ceri-m1-ecomm
 
 | Role                      | Membre |
 | ------------------------- | ------ |
-| Backend engineer          | _FILL_ |
-| Frontend engineer         | _FILL_ |
-| Site reliability engineer | _FILL_ |
+| Backend engineer          | EL HAJOUI Mohamed |
+| Frontend engineer         | ATMANI Yasser |
+| Site reliability engineer | LESZCZYNSKI Tom |
