@@ -14,10 +14,8 @@ Les instructions sont disponibles [ici](https://github.com/Faylixe/ceri-m1-ecomm
 | ----------- | ------ |
 | Nom         | ATMANI Yasser |
 | Identifiant | _FILL_ |
-| ----------- | ------ |
 | Nom         | EL HAJOUI Mohamed |
 | Identifiant | _FILL_ |
-| ----------- | ------ |
 | Nom         | LESZCZYNSKI Tom |
 | Identifiant | _FILL_ |
 
