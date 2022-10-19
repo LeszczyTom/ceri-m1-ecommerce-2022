@@ -6,11 +6,10 @@ Les instructions sont disponibles [ici](https://github.com/Faylixe/ceri-m1-ecomm
 
 ## Dream team
 
-| Nom                     | Identifiant |
-| ------------------------- | ------ |
-| ATMANI Yasser          | [YasserAtmani](https://github.com/YasserAtmani) |
-| EL HAJOUI Mohamed         | [MohamedEHJ](https://github.com/MohamedEHJ) |
-| LESZCZYNSKI Tom | [LeszczyTom](https://github.com/LeszczyTom) |
+|             |        |
+| ----------- | ------ |
+| Nom         | team-9-atmani-el_hajoui-leszczynski |
+| Identifiant | pinkzebra |
 <br>
 
 ### Staff
