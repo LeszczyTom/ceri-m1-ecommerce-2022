@@ -8,6 +8,12 @@
 poetry install
 ```
 
+## Start
+
+``` python
+poetry run start 
+```
+
 
 ## Dependencies
 
