@@ -6,16 +6,11 @@ Les instructions sont disponibles [ici](https://github.com/Faylixe/ceri-m1-ecomm
 
 ## Dream team
 
-|             |        |
-| ----------- | ------ |
-| Nom         | ATMANI Yasser |
-| Identifiant | YasserAtmani |
-| Nom         | EL HAJOUI Mohamed |
-| Identifiant | MohamedEHJ |
-| Nom         | LESZCZYNSKI Tom |
-| Identifiant | LeszczyTom |
-
-
+| Nom                     | Identifiant |
+| ------------------------- | ------ |
+| ATMANI Yasser          | [YasserAtmani](https://github.com/YasserAtmani) |
+| EL HAJOUI Mohamed         | [MohamedEHJ](https://github.com/MohamedEHJ) |
+| LESZCZYNSKI Tom | [LeszczyTom](https://github.com/LeszczyTom) |
 <br>
 
 ### Staff
