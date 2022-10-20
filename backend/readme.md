@@ -24,3 +24,5 @@ poetry run start
 - [black](https://github.com/psf/black)
 - [isort](https://github.com/PyCQA/isort)
 - [mypy](https://github.com/python/mypy)
+- [mysqlclient](https://github.com/PyMySQL/mysqlclient)
+- [Poetry Dotenv Plugin](https://github.com/mpeteuil/poetry-dotenv-plugin)
