@@ -4,9 +4,7 @@
 
 ## Setup
 
-``` python
-poetry install
-```
+- Create virtual environment and install packages using ``requirement.txt``
 
 ## Start
 
