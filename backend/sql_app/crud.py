@@ -79,3 +79,18 @@ def get_song_by_album_id(db: Session, album_id: int):
     """
     return db.query(models.Song).filter(models.Song.albums_id == album_id).first()
 
+
+def get_song_info_by_id(db: Session, song_id: int):
+    """
+    Returns this song's info:
+        songs.name, albums.name, artists.name, songs.genre, albums.year, songs.duration, albums.cover, albums.price
+    """
+    return db.execute(
+        """
+        SELECT  songs.name, albums.name, artists.name, songs.genre, albums.year, songs.duration, albums.cover, albums.price
+            from songs 
+            INNER JOIN albums ON albums.id = songs.albums_id
+            INNER JOIN artists ON artists.id = albums.artists_id
+            WHERE songs.id = {}
+        """.format(song_id)
+    ).first()

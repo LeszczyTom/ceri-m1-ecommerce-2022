@@ -76,3 +76,8 @@ def read_song_by_name(song_name: str, db: Session = Depends(get_db)):
 def read_song_by_album_id(album_id: int, db: Session = Depends(get_db)):
     song = crud.get_song_by_album_id(db, album_id)
     return song
+
+@app.get("/songs/info/{song_id}", summary="Returns info about a specific song by id")
+def read_song_info_by_id(song_id: int, db: Session = Depends(get_db)):
+    song = crud.get_song_info_by_id(db, song_id)
+    return song

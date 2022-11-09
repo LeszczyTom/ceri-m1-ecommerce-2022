@@ -1,6 +1,7 @@
 .vscode
 .DS_Store
 .env
+logfile.log
 
 # Python
 __pycache__/

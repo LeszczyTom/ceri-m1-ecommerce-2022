@@ -15,11 +15,11 @@ DB_SCHEMA = os.environ.get("DB_SCHEMA")
 
 
 print(
-    "mysql://{}:{}@{}:{}/mydb".format(DB_USER, DB_PWD, DB_HOSTNAME, DB_PORT, DB_SCHEMA)
+    "mysql://{}:{}@{}:{}/{}".format(DB_USER, DB_PWD, DB_HOSTNAME, DB_PORT, DB_SCHEMA)
 )
 
 engine = create_engine(
-    "mysql://{}:{}@{}:{}/mydb".format(DB_USER, DB_PWD, DB_HOSTNAME, DB_PORT, DB_SCHEMA),
+    "mysql://{}:{}@{}:{}/{}".format(DB_USER, DB_PWD, DB_HOSTNAME, DB_PORT, DB_SCHEMA),
     echo=True,
 )
 

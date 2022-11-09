@@ -2,9 +2,10 @@
 
 Made with love by [EL HAJOUI Mohamed](https://github.com/MohamedEHJ)
 
-## :wrench: Setup 
+## :wrench: Setup
 
 #### Create virtual environment
+
 ```bash
 # On Windows
 python -m venv your_venv_folder_name
@@ -22,11 +23,13 @@ source your_venv_folder_name/bin/activate
 ```
 
 #### Install packages using ``pip``
+
 ```bash
 pip install -r requirements.txt
 ```
 
-## :closed_lock_with_key: .env configuration 
+## :closed_lock_with_key: .env configuration
+
 ```dockerfile
 DB_USER='root'
 DB_PWD='YOUR_PWD'
@@ -36,7 +39,7 @@ DB_SCHEMA='mydb'
 
 ```
 
-## :rocket: Start 
+## :rocket: Start
 
 ``` bash
 # On Windows 
@@ -47,9 +50,6 @@ PS C:\...\ceri-m1-ecommerce-2022\backend >> python -m uvicorn main:app --reload
 # On Linux 
 mohamed@ubuntu:~/ceri-m1-ecommerce-2022\backend python -m uvicorn main:app --reload
 ```
-
-
-
 
 ## Dependencies
 
