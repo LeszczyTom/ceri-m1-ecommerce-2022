@@ -1,7 +1,9 @@
 # S-E06-0632: Projet e-commerce
+[![slack](https://img.shields.io/badge/slack-join-yellow.svg?logo=slack)](https://join.slack.com/t/cerim1ecommer-qy81374/shared_invite/zt-1hgh8de7q-v1Mb4g6rwPH6yNzmU7bKNA) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
 
-[![slack](https://img.shields.io/badge/slack-join-yellow.svg?logo=slack)](https://join.slack.com/t/cerim1ecommer-qy81374/shared_invite/zt-1hgh8de7q-v1Mb4g6rwPH6yNzmU7bKNA) [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
- 
+[![mypy](https://github.com/LeszczyTom/ceri-m1-ecommerce-2022/actions/workflows/mypy.yml/badge.svg)](https://github.com/LeszczyTom/ceri-m1-ecommerce-2022/actions/workflows/mypy.yml) [![Build Status - pytest](https://github.com/LeszczyTom/ceri-m1-ecommerce-2022/actions/workflows/pytest.yml/badge.svg)](https://github.com/LeszczyTom/ceri-m1-ecommerce-2022/actions/workflows/pytest.yml) [![Black](https://github.com/LeszczyTom/ceri-m1-ecommerce-2022/actions/workflows/black.yml/badge.svg)](https://github.com/LeszczyTom/ceri-m1-ecommerce-2022/actions/workflows/black.yml)
+
+
 Les instructions sont disponibles [ici](https://github.com/Faylixe/ceri-m1-ecommerce-2022/tree/main/docs).
 
 ## Dream team
