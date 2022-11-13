@@ -1,0 +1,350 @@
+import { useEffect, useState } from 'react';
+import VinylCard from '../card/VinylCard';
+import './productsList.css';
+
+function ProductsList(props) {
+
+  const [allRecords, setAllRecords] = useState([]);
+  const [filtered, setFiltered] = useState([]);
+  const [filtersGenres, setFiltersGenres] = useState([]);
+  const [filtersArtists, setFiltersArtists] = useState([]);
+  const [filtersAlbums, setFiltersAlbums] = useState([]);
+  const [filtersMinYear, setFiltersMinYear] = useState(1948);
+  const [filtersMaxYear, setFiltersMaxYear] = useState(2022);
+  const [filtersMinPrice, setFiltersMinPrice] = useState(0);
+  const [filtersMaxPrice, setFiltersMaxPrice] = useState(100);
+  const [uniqueAlbums, setUniqueAlbums] = useState([]);
+  const [uniqueArtists, setUniqueArtists] = useState([]);
+  const [uniqueGenres, setUniqueGenres] = useState([]);
+
+  useEffect(() => {
+    if(props.records){
+      setAllRecords(props.records);
+      setUniqueAlbums([...new Set(allRecords.map(q => q.album))]);
+      setUniqueArtists([...new Set(allRecords.map(q => q.artist))]);
+      setUniqueGenres([...new Set(allRecords.map(q => q.genre))]);
+      /* Pas de filtres */
+      if(filtersGenres.length === 0 && filtersArtists.length === 0 && filtersAlbums.length === 0 ) {
+        const array = allRecords.filter(function(item){
+          return filtersMinYear <= item.year && item.year <= filtersMaxYear && parseFloat(filtersMinPrice) <= parseFloat(item.price) && parseFloat(item.price) <= parseFloat(filtersMaxPrice) && !filtered.includes(item);
+        })
+        setFiltered(array);
+      }
+      else {
+        if(filtersGenres.length !== 0){
+          console.log(filtered);
+          /* Gestion des filtres genre */
+          const array = allRecords.filter(function(item){
+            return filtersMinYear <= item.year && item.year <= filtersMaxYear && parseFloat(filtersMinPrice) <= parseFloat(item.price) && parseFloat(item.price) <= parseFloat(filtersMaxPrice) && filtersGenres.includes(item.genre) && !filtered.includes(item);
+          })
+          /* Set filtered without duplicates with Set */
+          setFiltered([...filtered, ...array]);
+        }
+        
+        if(filtersAlbums.length !== 0){
+          /* Gestion des filtres albums */
+          const array = allRecords.filter(function(item){
+            return filtersMinYear <= item.year && item.year <= filtersMaxYear && parseFloat(filtersMinPrice) <= parseFloat(item.price) && parseFloat(item.price) <= parseFloat(filtersMaxPrice) && filtersAlbums.includes(item.album) && !filtered.includes(item);
+          })
+          setFiltered([...new Set([...filtered, ...array])]);
+          console.log("filtersAlbums", array);
+        }
+        
+        if(filtersArtists.length !== 0){
+          /* Gestion des filtres artistes */
+          const array = allRecords.filter(function(item){
+            return filtersMinYear <= item.year && item.year <= filtersMaxYear && parseFloat(filtersMinPrice) <= parseFloat(item.price) && parseFloat(item.price) <= parseFloat(filtersMaxPrice) && filtersArtists.includes(item.artist) && !filtered.includes(item);
+          })
+          setFiltered([...new Set([...filtered, ...array])]);
+          console.log("filtersArtists", array);
+        }
+      }
+    }
+  }, [props.records, allRecords, filtersGenres, filtersArtists, filtersAlbums, filtersMinYear, filtersMaxYear, filtersMinPrice, filtersMaxPrice, filtered]);
+
+
+  const handleGenreChange = (e, genre) => {
+    if(e.target.checked){
+      setFiltersGenres(filtersGenres => [...filtersGenres, genre]);
+    }else{
+      setFiltersGenres(filtersGenres.filter(item => item !== genre));
+    }
+  }
+
+  const handleAlbumChange = (e, album) => {
+    if(e.target.checked){
+      setFiltersAlbums(filtersAlbums => [...filtersAlbums, album]);
+    }else{
+      setFiltersAlbums(filtersAlbums.filter(item => item !== album));
+    }
+  }
+
+  const handleArtistChange = (e, artist) => {
+    if(e.target.checked){
+      setFiltersArtists(filtersArtists => [...filtersArtists, artist]);
+    }else{
+      setFiltersArtists(filtersArtists.filter(item => item !== artist));
+    }
+  }
+
+  const handleMinYearChange = (e) => {
+    if(e.target.value >= 1948 && e.target.value <= 2022){
+      setFiltersMinYear(e.target.value);
+    }
+    else if (e.target.value < 1948){
+      setFiltersMinYear(1948);
+      e.target.value = 1948;
+    }
+    else if (e.target.value > 2022){
+      setFiltersMinYear(2022);
+      e.target.value = 2022;
+    }
+    if(e.target.value > filtersMaxYear) {
+      setFiltersMinYear(filtersMaxYear);
+      e.target.value = filtersMaxYear;
+    }
+  }
+
+  const handleMaxYearChange = (e) => {
+    if(e.target.value >= 1948 && e.target.value <= 2022){
+      setFiltersMaxYear(e.target.value);
+    }
+    else if (e.target.value < 1948){
+      setFiltersMaxYear(1948);
+      e.target.value = 1948;
+    }
+    else if (e.target.value > 2022){
+      setFiltersMaxYear(2022);
+      e.target.value = 2022;
+    }
+    if(e.target.value < filtersMinYear) {
+      setFiltersMaxYear(filtersMinYear);
+      e.target.value = filtersMinYear;
+    }
+  }
+
+  const handleMinYearKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleMinYearChange(e)
+    }
+  }
+
+  const handleMaxYearKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleMaxYearChange(e)
+    }
+  }
+
+  /* Prix */
+
+  const handleMinPriceChange = (e) => {
+    if(e.target.value < 0 || e.target.value === "") {
+      setFiltersMinPrice(0);
+      e.target.value = 0;
+    }
+
+    if(e.target.value > filtersMaxPrice) {
+      setFiltersMinPrice(filtersMaxPrice);
+      e.target.value = filtersMaxPrice;
+    }
+    setFiltersMinPrice(parseFloat(e.target.value));
+  }
+
+  const handleMaxPriceChange = (e) => {
+    if(e.target.value < 0) {
+      setFiltersMaxPrice(0);
+      e.target.value = 0;
+    }
+
+    if(e.target.value === "") {
+      setFiltersMaxPrice(100);
+      e.target.value = 100;
+    }
+
+    if(e.target.value < filtersMinPrice) {
+      setFiltersMaxPrice(filtersMinPrice);
+      e.target.value = filtersMinPrice;
+    }
+
+    setFiltersMaxPrice(parseFloat(e.target.value));
+  }
+
+  const handleMinPriceKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleMinPriceChange(e)
+    }
+  }
+
+  const handleMaxPriceKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleMaxPriceChange(e)
+    }
+  }
+
+  if(filtered.length !== 0){
+    const products = filtered.map((record, index) => {
+      return (
+        <VinylCard key={index} record={record}/>
+      )
+    })
+    
+    return (
+      <>
+      <div className="container">
+      <div className="filtersList">
+        <h1 style={{fontFamily: "KarlaRegular", letterSpacing: "-2px"}}>Filtrer</h1>
+        
+        <div className="filter">
+          <h3>Prix</h3>
+          <div className="filterOptions">
+              <input className="inputPrix" type="number" placeholder="0" onKeyDown={handleMinPriceKeyDown} onBlur={handleMinPriceChange} />
+            -
+              <input className="inputPrix" type="number" placeholder="100" onKeyDown={handleMaxPriceKeyDown} onBlur={handleMaxPriceChange} />
+          </div>
+        </div>
+        
+        <div className="filter">
+          <h3>Genre</h3>
+          <div className="filterOptions">
+            
+            {uniqueGenres.map((x,y) => {
+              return(
+                <div className="filterOption" style={{textAlign:'left'}}>
+                  <input type="checkbox" id={x} name={x} onChange={(e) => handleGenreChange(e, x)}></input>
+                  <label htmlFor={x}>{x}</label>
+                </div>
+            )})}
+            
+          </div>
+        </div>
+        <div className="filter">
+          <h3>Albums</h3>
+          <div className="filterOptions">
+
+            {uniqueAlbums.map((x,y) => {
+              return(
+                <div className="filterOption" style={{textAlign:'left'}}>
+                  <input type="checkbox" id={x} name={x} onChange={(e) => handleAlbumChange(e, x)}></input>
+                  <label htmlFor={x}>{x}</label>
+                </div>
+            )})}
+            
+          </div>
+        </div>
+        <div className="filter">
+          <h3>Artistes</h3>
+          <div className="filterOptions">
+            
+            {uniqueArtists.map((x,y) => {
+              return(
+                <div className="filterOption" style={{textAlign:'left'}}>
+                  <input type="checkbox" id={x} name={x} onChange={(e) => handleArtistChange(e, x)}></input>
+                  <label htmlFor={x}>{x}</label>
+                </div>
+            )})}
+            
+          </div>
+        </div>
+
+        <div className="filter">
+          <h3>Année</h3>
+          <div className="filterOptions">
+              <input className="inputAnnee" type="number" placeholder="1948" onKeyDown={handleMinYearKeyDown} onBlur={handleMinYearChange} />
+            -
+              <input className="inputAnnee" type="number" placeholder="2022" onKeyDown={handleMaxYearKeyDown} onBlur={handleMaxYearChange} />
+          </div>
+        </div>
+       
+        {/*<div style={{margin:'30px'}}>
+          <button className="filterButton">Filtrer</button>
+        </div>*/}
+
+      </div>
+      <div className="productsList">
+        {products}
+      </div>
+      </div>
+      </>
+    );
+  }
+  return (
+    <>
+      <div className="container">
+      <div className="filtersList">
+        <h1 style={{fontFamily: "KarlaRegular", letterSpacing: "-2px"}}>Filtrer</h1>
+        
+        <div className="filter">
+          <h3>Prix</h3>
+          <div className="filterOptions">
+              <input className="inputPrix" type="number" placeholder="0" onKeyDown={handleMinPriceKeyDown} onBlur={handleMinPriceChange} />
+            -
+              <input className="inputPrix" type="number" placeholder="100" onKeyDown={handleMaxPriceKeyDown} onBlur={handleMaxPriceChange} />
+          </div>
+        </div>
+        
+        <div className="filter">
+          <h3>Genre</h3>
+          <div className="filterOptions">
+            
+            {uniqueGenres.map((x,y) => {
+              return(
+                <div className="filterOption" style={{textAlign:'left'}}>
+                  <input type="checkbox" id={x} name={x} onChange={(e) => handleGenreChange(e, x)}></input>
+                  <label htmlFor={x}>{x}</label>
+                </div>
+            )})}
+            
+          </div>
+        </div>
+        <div className="filter">
+          <h3>Albums</h3>
+          <div className="filterOptions">
+
+            {uniqueAlbums.map((x,y) => {
+              return(
+                <div className="filterOption" style={{textAlign:'left'}}>
+                  <input type="checkbox" id={x} name={x} onChange={(e) => handleAlbumChange(e, x)}></input>
+                  <label htmlFor={x}>{x}</label>
+                </div>
+            )})}
+            
+          </div>
+        </div>
+        <div className="filter">
+          <h3>Artistes</h3>
+          <div className="filterOptions">
+            
+            {uniqueArtists.map((x,y) => {
+              return(
+                <div className="filterOption" style={{textAlign:'left'}}>
+                  <input type="checkbox" id={x} name={x} onChange={(e) => handleArtistChange(e, x)}></input>
+                  <label htmlFor={x}>{x}</label>
+                </div>
+            )})}
+            
+          </div>
+        </div>
+
+        <div className="filter">
+          <h3>Année</h3>
+          <div className="filterOptions">
+              <input className="inputAnnee" type="number" placeholder="1948" onKeyDown={handleMinYearKeyDown} onBlur={handleMinYearChange} />
+            -
+              <input className="inputAnnee" type="number" placeholder="2022" onKeyDown={handleMaxYearKeyDown} onBlur={handleMaxYearChange} />
+          </div>
+        </div>
+       
+        {/*<div style={{margin:'30px'}}>
+          <button className="filterButton">Filtrer</button>
+              </div>*/}
+
+      </div>
+      <div className="notFound">
+        <h1 style={{fontFamily: "KarlaRegular", letterSpacing: "-2px"}}>Nous n'avons trouvé aucun vinyle avec ces critères...</h1>
+      </div>
+      
+      </div>
+      </>
+  );
+}
+export default ProductsList;

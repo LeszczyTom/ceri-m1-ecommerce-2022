@@ -1,0 +1,89 @@
+.details {
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 1vh;
+}
+
+.canvasContainer {
+    height: 250vh;
+    position: relative;
+  }
+  
+.canvasContainer canvas {
+    z-index: 1;
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    max-width: 100%;
+}
+
+.detailsContainer, .animationContainer  {
+    max-width: 100%;
+}
+
+.detailsContainer {
+    z-index: 2;
+    font-size: 20px;
+    letter-spacing: -2px;
+    text-align: left;
+    padding: 50px;
+    height: 50vh;
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40%;
+    display: flex;
+    align-items: center;
+}
+
+.titleSong {
+    font-size: 30px;
+    font-family: 'HavelockBold';
+    letter-spacing: -5px;
+}
+
+.albumSong {
+    margin-top: -20px;
+}
+
+.addToCartBtn {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+}
+
+.addToCartBtn:hover{
+    transition: ease-in-out 0.3s;
+    background-color: black;
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -15px;
+    cursor: pointer;
+}
+
+.coverContainer {
+    background-color: aqua;
+    z-index: 2;
+    position: fixed;
+    left: 90px;
+    top: 50%;
+    transform: translateY(-50%);
+    width:525px;
+    height:525px;
+    max-width: 100%;
+}
+
+.coverSong {
+    width: 100%;
+    height: 100%;
+    box-shadow: rgba(0, 0, 0, 0.45) 20px 15px 20px -15px;
+}
+
+.priceSong {
+    font-size: 30px;
+    font-family: 'KarlaBold';
+    letter-spacing: -2px;
+}

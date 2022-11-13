@@ -1,0 +1,157 @@
+.cart {
+    margin-top: 150px;
+}
+
+.shopping-cart{
+    margin-top: 150px;
+    width: 100%;
+    height: auto;
+    box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.10);
+    border-radius: 0.5em;
+    text-align: left;
+}
+
+/* item styling */
+.title{
+    height: 3.75em;
+    border-bottom: 1px solid #E1E8EE;
+    padding: 1.25em 1.75em;
+    color: #5E6977;
+    font-size: 1.125em;
+    font-weight: 400;
+}
+.item{
+    width: 50%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    
+    margin-bottom: 20px;
+}
+
+.is-active{
+    animation-name: animate;
+    animation-duration: .8s;
+    animation-iteration-count: 1;
+    animation-timing-function: steps(28);
+    animation-fill-mode: forwards;
+}
+@keyframes animate{
+    0% {background-position: left;}
+    50% {background-position: right;}
+    100% {background-position: right;}
+}
+
+.image{
+    margin-right: 30px;
+    width: 100px;
+    height: 100px;
+}
+
+.image img{
+    width: 100%;
+    height: 100px;
+}
+
+.description{
+    margin-right: 60px;
+    width: 115px;
+    }
+.description span{
+    display: block;
+    font-size: 1em;
+    color: #43484D;
+    font-weight: 400;
+}
+
+.quantity{
+    margin-right: 60px;
+}
+.quantity input{
+    -webkit-appearance: none;
+    border: none;
+    text-align: center;
+    width: 32px;
+    font-size: 1em;
+    color: #43484D;
+    font-weight: 300;
+}
+.plus-btn, .minus-btn, .clear-cart-btn {
+    width: 30px;
+    height: 30px;
+    background: none;
+    border: 1px solid black;
+    cursor: pointer;
+    -webkit-transition: all 0.1s ease;
+    transition: all 0.1s ease;
+}
+
+.plus-btn:hover, .minus-btn:hover, .clear-cart-btn:hover {
+    background: black;
+    color:white;
+}
+
+.clear-cart-btn {
+    padding: 10px;
+}
+
+.del-btn {
+    width: 30px;
+    height: 30px;
+    background: none;
+    margin-right: 30px;
+    border: 1px solid black;
+    border: 1px solid black;
+    color: black;
+    cursor: pointer;
+    -webkit-transition: all 0.1s ease;
+    transition: all 0.1s ease;
+}
+
+
+
+.del-btn:hover {
+    background-color: black;
+    color:white;
+}
+
+
+button:focus,
+input:focus{
+outline: 0;
+}
+
+.total-price{
+text-align: center;
+font-size: 1em;
+color: #43484D;
+font-weight: 300;
+}
+
+
+/* media queries */
+@media (max-width: 800px) {
+.shopping-cart{
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+.item {
+    height: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.image img{
+    width: 50%;
+}
+.image,
+.quantity,
+.description{
+    width: 100%;
+    text-align: center;
+    margin: 6px 0;
+}
+.buttons{
+    margin-right: 20px;
+}
+}
