@@ -23,3 +23,20 @@ class Song(BaseModel):
 
 	class Config:
 		orm_mode = True
+  
+class User(BaseModel):
+	id: int
+	fname: str
+	lname: str
+	email: str
+	pwd: str
+
+	class Config:
+		orm_mode = True
+  
+class LoginCredential(BaseModel):
+	email: str
+	pwd: str
+
+	class Config:
+		orm_mode = True

@@ -94,3 +94,12 @@ def get_song_info_by_id(db: Session, song_id: int):
             WHERE songs.id = {}
         """.format(song_id)
     ).first()
+
+def check_credentials(db: Session, email: str, pwd: str):
+    """
+    Returns true if credentials are correct
+    """
+    if db.query(models.User).filter(models.User.email == email).filter(models.User.pwd == pwd).first() != None:
+        return True
+    
+    return False

@@ -3,5 +3,7 @@
 .env
 logfile.log
 
+venv
+
 # Python
 __pycache__/

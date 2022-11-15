@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Request
 
 from sqlalchemy.orm import Session
 
@@ -81,3 +81,7 @@ def read_song_by_album_id(album_id: int, db: Session = Depends(get_db)):
 def read_song_info_by_id(song_id: int, db: Session = Depends(get_db)):
     song = crud.get_song_info_by_id(db, song_id)
     return song
+
+@app.post("/login", summary="Returns true if credentials are correct")
+def login(login_credential: schemas.LoginCredential, db: Session = Depends(get_db)):
+    return crud.check_credentials(db, login_credential.email, login_credential.pwd)
