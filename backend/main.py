@@ -1,5 +1,4 @@
-from fastapi import FastAPI, Depends, Request
-
+from fastapi import Depends, FastAPI, Request
 from sqlalchemy.orm import Session
 
 import sql_app.crud as crud
