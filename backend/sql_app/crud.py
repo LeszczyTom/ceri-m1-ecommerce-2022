@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from . import models, schemas
+from sql_app import models
 
 
 def get_artists(db: Session):
@@ -94,7 +94,7 @@ def get_song_info_by_id(db: Session, song_id: int):
             WHERE songs.id = {}
         """.format(
             song_id
-        )
+        )  # type: ignore
     ).first()
 
 

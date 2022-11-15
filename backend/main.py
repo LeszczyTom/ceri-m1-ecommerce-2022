@@ -42,7 +42,7 @@ def read_artist_by_name(artist_name: str, db: Session = Depends(get_db)):
 
 
 @app.get("/albums", summary="Returns all albums")
-def read_artists(db: Session = Depends(get_db)):
+def read_albums(db: Session = Depends(get_db)):
     albums = crud.get_albums(db)
     return albums
 
@@ -66,7 +66,7 @@ def read_album_by_artist_id(artist_id: int, db: Session = Depends(get_db)):
 
 
 @app.get("/songs", summary="Returns all songs")
-def read_artists(db: Session = Depends(get_db)):
+def read_songs(db: Session = Depends(get_db)):
     songs = crud.get_songs(db)
     return songs
 
