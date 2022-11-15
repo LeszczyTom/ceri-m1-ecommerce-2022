@@ -25,6 +25,7 @@ class Song(Base):
 
     albums_id = Column(Integer, ForeignKey("albums.id"))
 
+
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
@@ -33,8 +34,8 @@ class User(Base):
     email = Column(String)
     pwd = Column(String)
 
+
 # from sqlalchemy.orm import sessionmaker
 
 # Session = sessionmaker(bind=engine)
 # session = Session()
-

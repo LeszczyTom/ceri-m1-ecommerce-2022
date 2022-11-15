@@ -14,9 +14,7 @@ DB_PORT = os.environ.get("DB_PORT")
 DB_SCHEMA = os.environ.get("DB_SCHEMA")
 
 
-print(
-    "mysql://{}:{}@{}:{}/{}".format(DB_USER, DB_PWD, DB_HOSTNAME, DB_PORT, DB_SCHEMA)
-)
+print("mysql://{}:{}@{}:{}/{}".format(DB_USER, DB_PWD, DB_HOSTNAME, DB_PORT, DB_SCHEMA))
 
 engine = create_engine(
     "mysql://{}:{}@{}:{}/{}".format(DB_USER, DB_PWD, DB_HOSTNAME, DB_PORT, DB_SCHEMA),
