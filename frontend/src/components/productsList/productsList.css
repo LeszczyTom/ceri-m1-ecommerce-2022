@@ -1,0 +1,119 @@
+.productsList {
+    padding: 5%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 35px;
+    justify-items: center;
+    overflow-y: scroll;
+    align-items: center;
+}
+
+.notFound {
+    padding: 5%;
+    justify-items: center;
+    overflow-y: scroll;
+    align-items: center;
+}
+
+.container {
+    overflow: hidden;
+    margin-top: 100px;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    height: 89vh;
+} 
+
+.filtersList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.inputPrix {
+    padding: 5px;
+    width: 50px;
+    border: none;
+    margin-inline: 20px;
+    border-bottom: 1px solid rgba(0,0,0,0.5);
+    text-align: center;
+}
+
+.inputPrix, .inputAnnee {
+    font-family: 'KarlaBold';
+    outline: none;
+    padding: 5px;
+    width: 30px;
+    border: none;
+    margin-inline: 0px;
+    border-bottom: 1px solid rgba(0,0,0,0.5);
+    text-align: center;
+}
+.inputAnnee {
+    width: 50px;
+}
+
+.filterButton {
+    width: 100px;
+    font-family: 'KarlaRegular';
+    font-size: 15px;
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+}
+
+.filterButton:hover{
+    transition: ease-in-out 0.3s;
+    background-color: black;
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -15px;
+    cursor: pointer;
+}
+
+.filterOptions, .filtersList h3, h1 {
+    width: 130px;
+    text-align: left;
+}
+
+.filterOptionLabel {
+    line-height: 1.1;
+    display: grid;
+    grid-template-columns: 1.15em auto;
+    gap: 0.5em;
+}
+
+.filterOptions input[type="checkbox"] {
+    vertical-align:middle;
+    /* Add if not using autoprefixer */
+    -webkit-appearance: none;
+    appearance: none;
+    /* For iOS < 15 to remove gradient background */
+    background-color: #fff;
+    /* Not removed via appearance */
+    font: inherit;
+    color: currentColor;
+    width: 1em;
+    height: 1em;
+    border: 0.1em solid currentColor;
+    border-radius: 0.15em;
+    transform: translateY(-.2em);
+    display: grid;
+    place-items: center;
+}
+
+.filterOptions input[type="checkbox"]::before {
+    content: "";
+    width: 80%;
+    height: 80%;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em black;
+}
+
+
+.filterOptions input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}
+
+  
