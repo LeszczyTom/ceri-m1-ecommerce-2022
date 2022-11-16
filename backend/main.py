@@ -97,3 +97,8 @@ def read_song_info_by_id(song_id: int, db: Session = Depends(get_db)):
 @app.post("/login", summary="Returns true if credentials are correct")
 def login(login_credential: schemas.LoginCredential, db: Session = Depends(get_db)):
     return crud.check_credentials(db, login_credential.email, login_credential.pwd)
+
+
+@app.post("/register", summary="Returns true if registration was successful")
+def register(login_credential: schemas.LoginCredential, db: Session = Depends(get_db)):
+    return crud.user_registration(db, login_credential.email, login_credential.pwd)

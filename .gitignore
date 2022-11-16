@@ -4,6 +4,7 @@
 logfile.log
 
 venv
+.venv
 
 # Python
 __pycache__/
