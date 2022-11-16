@@ -111,3 +111,16 @@ def check_credentials(db: Session, email: str, pwd: str):
         return True
 
     return False
+
+
+def user_registration(db: Session, email: str, pwd: str):
+    """
+    Registers a new user
+    """
+    exists = db.query(models.User.email).filter_by(email=email).first() is not None
+    if exists:
+        return False
+
+    db.add(models.User(email=email, pwd=pwd))
+    db.commit()
+    return True

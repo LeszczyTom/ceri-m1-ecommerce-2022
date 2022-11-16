@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
 from .database import Base
@@ -14,6 +14,10 @@ class Album(Base):
     __tablename__ = "albums"
     id = Column(Integer, primary_key=True)
     name = Column(String)
+    year = Column(Integer)
+    price = Column(Float)
+    cover = Column(String)
+    stock = Column(Integer)
 
     artists_id = Column(Integer, ForeignKey("artists.id"))
 
@@ -22,6 +26,8 @@ class Song(Base):
     __tablename__ = "songs"
     id = Column(Integer, primary_key=True)
     name = Column(String)
+    genre = Column(String)
+    duration = Column(Integer)
 
     albums_id = Column(Integer, ForeignKey("albums.id"))
 
@@ -33,9 +39,25 @@ class User(Base):
     lname = Column(String)
     email = Column(String)
     pwd = Column(String)
+    address = Column(String)
+    zipcode = Column(String)
+    city = Column(String)
+    country = Column(String)
 
 
-# from sqlalchemy.orm import sessionmaker
+class Order(Base):
+    __tablename__ = "orders"
+    id = Column(Integer, primary_key=True)
+    order_date = Column(String)
+    total_price = Column(Float)
 
-# Session = sessionmaker(bind=engine)
-# session = Session()
+    users_id = Column(Integer, ForeignKey("users.id"))
+
+
+class Orders_items(Base):
+    __tablename__ = "orders_item"
+    id = Column(Integer, primary_key=True)
+    quantity = Column(Integer)
+
+    albums_id = Column(Integer, ForeignKey("albums.id"))
+    orders_id = Column(Integer, ForeignKey("orders.id"))
