@@ -9,8 +9,8 @@ terraform {
 }
 
 provider "google" {
-    project = "ceri-m1-ecommerce-2022"
-    region  = "europe-west1"
+  project = "ceri-m1-ecommerce-2022"
+  region  = "europe-west1"
 }
 
 resource "google_cloud_run_service" "backend" {
@@ -43,7 +43,7 @@ resource "google_cloud_run_service" "frontend" {
       "autoscaling.knative.dev/minScale" = 1
     }
   }
-  
+
   template {
     spec {
       containers {
