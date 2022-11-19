@@ -85,6 +85,7 @@ jobs:
         
   deploy:
     needs: [black, isort, mypy, pytest]
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -107,6 +108,6 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: "{{defaultContext}}:backend"
+          context: ./backend
           push: true
           tags: backend:latest
