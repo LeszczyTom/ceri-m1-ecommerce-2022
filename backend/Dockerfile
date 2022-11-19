@@ -4,9 +4,11 @@ FROM python:3.8-alpine
 
 WORKDIR /app
 
+RUN apk add gcc musl-dev mariadb-connector-c-dev
+
 COPY requirements.txt requirements.txt
 
-RUN python -m pip install -r requirements.txt
+RUN python -m pip install -r requirements.txt --upgrade pip
 
 COPY . .
 
