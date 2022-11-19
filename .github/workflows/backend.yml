@@ -38,9 +38,9 @@ jobs:
     
     steps:
       - name: isort
-          uses: isort/isort-action@v1.1.0
-          with:
-              requirements: "requirements.txt"
+        uses: isort/isort-action@v1.1.0
+        with:
+            requirements: "requirements.txt"
     
     mypy:
       needs: build
