@@ -23,6 +23,7 @@ jobs:
       fail-fast: false
 
     steps:
+      - uses: actions/checkout@v3
       - name: Run Black
         uses: psf/black@stable
         with:
@@ -37,6 +38,7 @@ jobs:
       fail-fast: false
     
     steps:
+      - uses: actions/checkout@v3
       - name: isort
         uses: isort/isort-action@v1.1.0
         with:
@@ -49,6 +51,7 @@ jobs:
       fail-fast: false
     
     steps:
+      - uses: actions/checkout@v3
       - name: Run mypy
         run : |
           mypy ./backend --config-file ./backend/mypy.ini
@@ -60,6 +63,7 @@ jobs:
       fail-fast: false
     
     steps:
+      - uses: actions/checkout@v3
       - name: Run pytest
         run : |
           pytest
