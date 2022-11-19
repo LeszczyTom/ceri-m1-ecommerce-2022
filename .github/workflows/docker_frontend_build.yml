@@ -27,6 +27,6 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: https://github.com/LeszczyTom/ceri-m1-ecommerce-2022.git:frontend
+          context: https://github.com/LeszczyTom/ceri-m1-ecommerce-2022.git#main:frontend
           push: true
           tags: frontend:latest
