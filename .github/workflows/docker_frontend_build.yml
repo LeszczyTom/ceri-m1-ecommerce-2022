@@ -12,6 +12,6 @@ jobs:
       - uses: actions/checkout@v3
       - name: login and push
         run: |
-          docker build -t frontend ./frontend
+          docker build -t ${{ secrets.DOCKER_REGISTRY }}/frontend:latestd ./frontend
           docker login -u ${{ secrets.DOCKER_REGISTRY_USERNAME }} -p ${{ secrets.DOCKER_REGISTRY_PASSWORD }} ${{ secrets.DOCKER_REGISTRY }}
           docker push ${{ secrets.DOCKER_REGISTRY }}/frontend:latest
