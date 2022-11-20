@@ -13,7 +13,7 @@ provider "google" {
   region  = "europe-west1"
 }
 
-resource "google_cloud_run_service" "default" {
+resource "google_cloud_run_service" "back" {
   name     = "cloud-run-backend"
   location = "europe-west1"
 
@@ -32,7 +32,7 @@ resource "google_cloud_run_service" "default" {
   }
 }
 
-resource "google_cloud_run_service" "default" {
+resource "google_cloud_run_service" "front" {
   name     = "cloud-run-frontend"
   location = "europe-west1"
 

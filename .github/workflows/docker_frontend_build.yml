@@ -10,8 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: login and push
-        run: |
-          docker build -t ${{ secrets.DOCKER_REGISTRY }}/frontend:latestd ./frontend
+      - name: Login
+        run: echo ${{ secrets.DOCKER_REGISTRY_PASSWORD }} | docker login --username ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin ${{ secrets.DOCKER_REGISTRY }}
+      - name: Build and push 
+        run: | 
           echo ${{ secrets.DOCKER_REGISTRY_PASSWORD }} | docker login --username ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin ${{ secrets.DOCKER_REGISTRY }}
           docker push ${{ secrets.DOCKER_REGISTRY }}/frontend:latest
