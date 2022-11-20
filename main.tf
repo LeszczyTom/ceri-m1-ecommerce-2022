@@ -50,3 +50,7 @@ resource "google_cloud_run_service" "front" {
     }
   }
 }
+
+output "url" {
+  value = "${google_cloud_run_service.front.status[0].url}"
+}

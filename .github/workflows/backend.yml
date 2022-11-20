@@ -93,7 +93,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Login
-        run: echo ${{ secrets.DOCKER_REGISTRY_PASSWORD }} | docker login --username ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin ${{ secrets.DOCKER_REGISTRY }}
+        run: echo "${{ secrets.DOCKER_REGISTRY_PASSWORD }}" | docker login --username ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin ${{ secrets.DOCKER_REGISTRY }}
       - name: Build and push 
         run: | 
           docker build -t ${{ secrets.DOCKER_REGISTRY }}/backend:latest ./backend
