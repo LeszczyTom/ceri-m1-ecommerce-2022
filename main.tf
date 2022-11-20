@@ -13,41 +13,39 @@ provider "google" {
   region  = "europe-west1"
 }
 
-resource "google_cloud_run_service" "backend" {
-  name     = "CLOUD_RUN_BACKEND"
+resource "google_cloud_run_service" "default" {
+  name     = "cloud-run-backend"
   location = "europe-west1"
 
   metadata {
     annotations = {
       "autoscaling.knative.dev/maxScale" = 1
-      "autoscaling.knative.dev/minScale" = 1
     }
   }
 
   template {
     spec {
       containers {
-        image = "europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/pinkzebra/backend"
+        image = "europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/pinkzebra/backend:latest"
       }
     }
   }
 }
 
-resource "google_cloud_run_service" "frontend" {
-  name     = "CLOUD_RUN_FRONTEND"
+resource "google_cloud_run_service" "default" {
+  name     = "cloud-run-frontend"
   location = "europe-west1"
 
   metadata {
     annotations = {
       "autoscaling.knative.dev/maxScale" = 1
-      "autoscaling.knative.dev/minScale" = 1
     }
   }
 
   template {
     spec {
       containers {
-        image = "europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/pinkzebra/frontend"
+        image = "europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/pinkzebra/frontend:latest"
       }
     }
   }

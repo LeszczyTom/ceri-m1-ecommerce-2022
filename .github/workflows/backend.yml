@@ -95,5 +95,5 @@ jobs:
       - name: login and push
         run: |
           docker build -t ${{ secrets.DOCKER_REGISTRY }}/backend:latest ./backend
-          docker login -u ${{ secrets.DOCKER_REGISTRY_USERNAME }} -p ${{ secrets.DOCKER_REGISTRY_PASSWORD }} ${{ secrets.DOCKER_REGISTRY }}
+          echo ${{ secrets.DOCKER_REGISTRY_PASSWORD }} | docker login --username ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin ${{ secrets.DOCKER_REGISTRY }}
           docker push ${{ secrets.DOCKER_REGISTRY }}/backend:latest
