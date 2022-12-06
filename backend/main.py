@@ -106,3 +106,7 @@ def add_album_to_cart(cart_item: schemas.Cart_item, db: Session = Depends(get_db
 @app.post("/rem_album_cart", summary="Removes a song from the cart of a user")
 def rem_album_from_cart(cart_item: schemas.Cart_item, db: Session = Depends(get_db)):
     return crud.rem_album_from_cart(db, cart_item.user_id, cart_item.albums_id, cart_item.quantity)
+
+@app.get("/cart/{user_id}", summary="Returns all items in the cart")
+def get_user_cart(user_id: int, db: Session = Depends(get_db)):
+    return crud.get_user_cart(db, user_id)
