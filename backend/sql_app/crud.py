@@ -117,7 +117,7 @@ def add_album_to_cart(db: Session, user_id: int, album_id: int, quantity: int):
     """
     Adds an album to the cart
     """
-    status_msg = ""
+    status_msg = {}
 
     for i in range(quantity):
         item = (
@@ -141,7 +141,7 @@ def rem_album_from_cart(db: Session, user_id: int, album_id: int, quantity: int)
     """
     Adds an album to the cart
     """
-    status_msg = ""
+    status_msg = {}
 
     for i in range(quantity):
         item = (
