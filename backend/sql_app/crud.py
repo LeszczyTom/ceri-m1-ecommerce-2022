@@ -118,18 +118,24 @@ def add_album_to_cart(db: Session, user_id: int, album_id: int, quantity: int):
     Adds an album to the cart
     """
     status_msg = ""
-    
+
     for i in range(quantity):
-        item = db.query(models.Cart).filter(models.Cart.users_id == user_id).filter(models.Cart.albums_id == album_id).first()
+        item = (
+            db.query(models.Cart)
+            .filter(models.Cart.users_id == user_id)
+            .filter(models.Cart.albums_id == album_id)
+            .first()
+        )
         if item is None:
             db.add(models.Cart(users_id=user_id, albums_id=album_id, quantity=quantity))
-            return  {"message": "Item added to cart"}
+            return {"message": "Item added to cart"}
         elif item is not None:
             item.quantity += 1
             db.commit()
-            status_msg =  {"message": "quantity added to item in cart"}
-        
+            status_msg = {"message": "quantity added to item in cart"}
+
     return status_msg
+
 
 def rem_album_from_cart(db: Session, user_id: int, album_id: int, quantity: int):
     """
@@ -137,8 +143,13 @@ def rem_album_from_cart(db: Session, user_id: int, album_id: int, quantity: int)
     """
     status_msg = ""
 
-    for i in range(quantity):    
-        item = db.query(models.Cart).filter(models.Cart.users_id == user_id).filter(models.Cart.albums_id == album_id).first()
+    for i in range(quantity):
+        item = (
+            db.query(models.Cart)
+            .filter(models.Cart.users_id == user_id)
+            .filter(models.Cart.albums_id == album_id)
+            .first()
+        )
         if item is not None:
             if item.quantity == 1:
                 db.delete(item)
@@ -147,7 +158,7 @@ def rem_album_from_cart(db: Session, user_id: int, album_id: int, quantity: int)
             if item.quantity > 1:
                 item.quantity -= 1
                 db.commit()
-                status_msg =  {"message": "1 quantity removed from cart"}
+                status_msg = {"message": "1 quantity removed from cart"}
         elif item is None:
             return {"message": "Item not in cart"}
 
