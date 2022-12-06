@@ -126,3 +126,10 @@ def add_album_to_cart(db: Session, user_id: int, album_id: int, quantity: int):
         )  # type: ignore
     )
     db.commit()
+
+
+def get_user_cart(db: Session, user_id: int):
+    """
+    Returns the user's cart
+    """
+    return db.query(models.Cart).filter(models.Cart.users_id == user_id).all()

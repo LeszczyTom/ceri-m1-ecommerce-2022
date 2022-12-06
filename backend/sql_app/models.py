@@ -36,11 +36,11 @@ class User(Base):
 
 
 class Cart(Base):
-    __tablename__ = "cart"
+    __tablename__ = "carts"
     id = Column(Integer, primary_key=True)
     quantity = Column(Integer)
 
-    user_id = Column(Integer, ForeignKey("users.id"))
+    users_id = Column(Integer, ForeignKey("users.id"))
     albums_id = Column(Integer, ForeignKey("albums.id"))
 
 
