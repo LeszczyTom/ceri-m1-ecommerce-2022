@@ -97,3 +97,8 @@ def read_song_info_by_id(song_id: int, db: Session = Depends(get_db)):
 @app.post("/login", summary="Returns true if credentials are correct")
 def login(login_credential: schemas.LoginCredential, db: Session = Depends(get_db)):
     return crud.check_credentials(db, login_credential.email, login_credential.pwd)
+
+
+@app.post("/add_album_cart", summary="Adds an album to the cart")
+def add_album_to_cart(cart_item: schemas.Cart_item, db: Session = Depends(get_db)):
+    return crud.add_album_to_cart(db, cart_item.user_id, cart_item.albums_id, cart_item.quantity)

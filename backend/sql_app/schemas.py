@@ -46,3 +46,12 @@ class LoginCredential(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class Cart_item(BaseModel):
+    quantity: int
+    user_id: int
+    albums_id: int
+
+    class Config:
+        orm_mode = True

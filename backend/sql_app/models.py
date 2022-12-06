@@ -35,6 +35,15 @@ class User(Base):
     pwd = Column(String)
 
 
+class Cart(Base):
+    __tablename__ = "cart"
+    id = Column(Integer, primary_key=True)
+    quantity = Column(Integer)
+
+    user_id = Column(Integer, ForeignKey("users.id"))
+    albums_id = Column(Integer, ForeignKey("albums.id"))
+
+
 # from sqlalchemy.orm import sessionmaker
 
 # Session = sessionmaker(bind=engine)

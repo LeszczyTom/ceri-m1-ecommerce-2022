@@ -111,3 +111,18 @@ def check_credentials(db: Session, email: str, pwd: str):
         return True
 
     return False
+
+
+def add_album_to_cart(db: Session, user_id: int, album_id: int, quantity: int):
+    """
+    Adds an album to the cart
+    """
+    db.execute(
+        """
+        INSERT INTO carts (users_id, albums_id, quantity)
+        VALUES ({}, {}, {})
+        """.format(
+            user_id, album_id, quantity
+        )  # type: ignore
+    )
+    db.commit()
