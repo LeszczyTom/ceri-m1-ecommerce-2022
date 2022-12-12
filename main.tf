@@ -14,14 +14,9 @@ provider "google" {
 }
 
 resource "google_cloud_run_service" "back" {
-  name     = "cloud-run-backend"
-  location = "europe-west1"
-
-  metadata {
-    annotations = {
-      "autoscaling.knative.dev/maxScale" = 1
-    }
-  }
+  name          = "cloud-run-backend"
+  location      = "europe-west1"
+  max_instances = 1
 
   template {
     spec {
@@ -34,14 +29,10 @@ resource "google_cloud_run_service" "back" {
 }
 
 resource "google_cloud_run_service" "front" {
-  name     = "cloud-run-frontend"
-  location = "europe-west1"
+  name          = "cloud-run-frontend"
+  location      = "europe-west1"
+  max_instances = 1
 
-  metadata {
-    annotations = {
-      "autoscaling.knative.dev/maxScale" = 1
-    }
-  }
 
   template {
     spec {
