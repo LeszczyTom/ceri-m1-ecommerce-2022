@@ -10,6 +10,7 @@ terraform {
 
 data "google_secret_manager_secret" "address" {
   secret_id = "mysql.address"
+  version   = "1"
 }
 
 provider "google" {
