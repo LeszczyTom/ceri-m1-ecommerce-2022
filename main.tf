@@ -36,7 +36,7 @@ resource "google_cloud_run_service" "back" {
           value_from {
             secret_key_ref {
               name = data.google_secret_manager_secret.address.secret_id
-              key = "latest"
+              key  = "latest"
             }
           }
         }
