@@ -126,3 +126,30 @@ def add_album_to_cart(db: Session, user_id: int, album_id: int, quantity: int):
         )  # type: ignore
     )
     db.commit()
+
+
+def get_cart_price(db: Session, user_id: int):
+    """
+    Returns the price of the cart
+    """
+    cart_price = 0
+    cart_items = db.query(models.Cart, models.Album).join(models.Album, models.Album.id == models.Cart.albums_id).filter(models.Cart.users_id == user_id).all()
+        
+    return cart_items
+
+
+def pay_cart(db: Session, user_id: int):
+    """
+    Pays the cart
+    """
+    # Get every item in the cart for a user
+    cart = db.query(models.Cart).filter(models.Cart.users_id == user_id).all()
+    
+    
+    
+    for item in cart:
+        for i in range(item.quantity):
+            db
+        print(item.albums_id)
+    
+    # db.commit()
