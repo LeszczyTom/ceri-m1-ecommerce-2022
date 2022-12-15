@@ -1,6 +1,10 @@
 name: Deploy
 
-on: [push, pull_request]
+on:
+  workflow_run:
+    workflows: ["Backend", "Frontend"]
+    types:
+      - completed
 
 jobs:
   deploy:
@@ -33,7 +37,6 @@ jobs:
         
       - name: Terraform plan
         id: plan
-        if: github.event_name == 'pull_request'
         run: terraform plan -no-color -input=false
         continue-on-error: true
 
@@ -72,5 +75,4 @@ jobs:
         run: exit 1
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
