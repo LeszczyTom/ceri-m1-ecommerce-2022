@@ -19,12 +19,6 @@ class Album(BaseModel):
     cover: str
     stock: int
 
-    artists_id: int
-    year: int
-    price: float
-    cover: str
-    stock: int
-
     class Config:
         orm_mode = True
 
@@ -34,10 +28,6 @@ class Song(BaseModel):
     name: str
     genre: str
     duration: int
-
-    albums_id: int
-    genre: str
-    duration: str
 
     class Config:
         orm_mode = True
@@ -49,10 +39,6 @@ class User(BaseModel):
     lname: str
     email: str
     pwd: str
-    address: str
-    zipcode: str
-    city: str
-    country: str
     address: str
     zipcode: str
     city: str
