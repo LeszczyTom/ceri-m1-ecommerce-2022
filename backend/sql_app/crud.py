@@ -137,29 +137,29 @@ def add_album_to_cart(db: Session, user_id: int, album_id: int, quantity: int):
     return status_msg
 
 
-def rem_album_from_cart(db: Session, user_id: int, album_id: int, quantity: int):
-    """
-    Adds an album to the cart
-    """
-    status_msg = {}
 
-    for i in range(quantity):
-        item = (
-            db.query(models.Cart)
-            .filter(models.Cart.users_id == user_id)
-            .filter(models.Cart.albums_id == album_id)
-            .first()
-        )
-        if item is not None:
-            if item.quantity == 1:
-                db.delete(item)
-                db.commit()
-                return {"message": "Item removed from cart"}
-            if item.quantity > 1:
-                item.quantity -= 1
-                db.commit()
-                status_msg = {"message": "1 quantity removed from cart"}
-        elif item is None:
-            return {"message": "Item not in cart"}
+def get_cart_price(db: Session, user_id: int):
+    """
+    Returns the price of the cart
+    """
+    cart_price = 0
+    cart_items = db.query(models.Cart, models.Album).join(models.Album, models.Album.id == models.Cart.albums_id).filter(models.Cart.users_id == user_id).all()
+        
+    return cart_items
 
-    return status_msg
+
+def pay_cart(db: Session, user_id: int):
+    """
+    Pays the cart
+    """
+    # Get every item in the cart for a user
+    cart = db.query(models.Cart).filter(models.Cart.users_id == user_id).all()
+    
+    
+    
+    for item in cart:
+        for i in range(item.quantity):
+            db
+        print(item.albums_id)
+    
+    # db.commit()
