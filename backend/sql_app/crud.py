@@ -1,6 +1,5 @@
-from sqlalchemy.orm import Session
-
 from sql_app import models
+from sqlalchemy.orm import Session
 
 
 def get_artists(db: Session):
