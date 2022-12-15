@@ -116,15 +116,17 @@ def rem_album_from_cart(cart_item: schemas.Cart_item, db: Session = Depends(get_
 @app.get("/cart/{user_id}", summary="Returns all items in the cart")
 def get_user_cart(user_id: int, db: Session = Depends(get_db)):
     return crud.get_user_cart(db, user_id)
-    return crud.add_album_to_cart(
-        db, cart_item.user_id, cart_item.albums_id, cart_item.quantity
-    )
 
-@app.get("/cart_price/{user_id}", summary="Returns the price of the cart")
+
+@app.get(
+    "/cart_price/{user_id}",
+    summary="Returns the price of the cart",
+    response_model=schemas.Price,
+)
 def get_cart_price(user_id: int, db: Session = Depends(get_db)):
     return crud.get_cart_price(db, user_id)
 
 
-@app.post("/pay_cart/{userid}", summary="Pays the cart of a user")
+@app.get("/pay_cart/{userid}", summary="Pays the cart of a user")
 def pay_cart(userid: int, db: Session = Depends(get_db)):
     return crud.pay_cart(db, userid)

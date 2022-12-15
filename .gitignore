@@ -2,6 +2,7 @@
 .DS_Store
 .env
 logfile.log
+.mypy_cache
 
 venv
 
@@ -42,3 +43,4 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+backend/issue 16,17 et 18.md

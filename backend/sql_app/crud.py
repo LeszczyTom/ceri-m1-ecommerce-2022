@@ -119,23 +119,74 @@ def add_album_to_cart(db: Session, user_id: int, album_id: int, quantity: int):
     """
     status_msg = {}
 
-    for i in range(quantity):
-        item = (
-            db.query(models.Cart)
-            .filter(models.Cart.users_id == user_id)
-            .filter(models.Cart.albums_id == album_id)
-            .first()
-        )
-        if item is None:
-            db.add(models.Cart(users_id=user_id, albums_id=album_id, quantity=quantity))
-            return {"message": "Item added to cart"}
-        elif item is not None:
-            item.quantity += 1
-            db.commit()
-            status_msg = {"message": "quantity added to item in cart"}
+    album_stock = db.query(models.Album).filter(models.Album.id == album_id).first()
+    album_to_add = (
+        db.query(models.Cart)
+        .filter(models.Cart.users_id == user_id)
+        .filter(models.Cart.albums_id == album_id)
+        .first()
+    )
+
+    if album_stock is None:
+        return {"message": "Album does not exist"}
+
+    if quantity <= 0:
+        return {"message": "Quantity must be greater than 0, dumbass"}
+
+    if quantity > album_stock.stock:
+        return {"message": "Not enough stock"}
+
+    if album_to_add is None:  # If item is not in cart, then we just add the line
+        db.add(models.Cart(users_id=user_id, albums_id=album_id, quantity=quantity))
+        album_stock.stock -= quantity
+        db.commit()
+        return {"message": "Item added to cart"}
+    elif album_to_add is not None:  # If item is already in cart, we increment quantity
+        album_to_add.quantity += quantity
+        album_stock.stock -= quantity
+        db.commit()
+        status_msg = {"message": f"{quantity} added to item in cart"}
 
     return status_msg
 
+
+def rem_album_from_cart(db: Session, user_id: int, album_id: int, quantity: int):
+    """
+    Remove item from cart
+    """
+    status_msg = {}
+
+    album_stock = db.query(models.Album).filter(models.Album.id == album_id).first()
+    album_to_remove = (db.query(models.Cart)
+        .filter(models.Cart.users_id == user_id)
+        .filter(models.Cart.albums_id == album_id)
+        .first())
+    
+    if album_stock is None:
+        return {"message": "Album does not exist"}
+
+    if quantity <= 0:
+        return {"message": "Quantity must be greater than 0, dumbass"}
+
+    if (
+        album_to_remove
+        is None
+    ):  # Verify that item is in cart
+        return {"message": "Item not in cart"}
+
+
+    if album_to_remove.quantity > quantity:
+        album_to_remove.quantity -= quantity
+        album_stock.stock += quantity
+        db.commit()
+        status_msg = {"message": "{} item(s) removed from cart".format(quantity)}
+    elif album_to_remove.quantity <= quantity:
+        db.delete(album_to_remove)
+        album_stock.stock += album_to_remove.quantity
+        db.commit()
+        status_msg = {"message": "Item removed from cart"}
+
+    return status_msg
 
 
 def get_cart_price(db: Session, user_id: int):
@@ -143,23 +194,30 @@ def get_cart_price(db: Session, user_id: int):
     Returns the price of the cart
     """
     cart_price = 0
-    cart_items = db.query(models.Cart, models.Album).join(models.Album, models.Album.id == models.Cart.albums_id).filter(models.Cart.users_id == user_id).all()
-        
-    return cart_items
+    cart_items = (
+        db.query(models.Cart, models.Album)
+        .join(models.Album, models.Album.id == models.Cart.albums_id)
+        .filter(models.Cart.users_id == user_id)
+        .all()
+    )
+
+    for item in cart_items:
+        cart_price += item.Album.price * item.Cart.quantity
+
+    return {"price": cart_price}
 
 
 def pay_cart(db: Session, user_id: int):
     """
     Pays the cart
     """
-    # Get every item in the cart for a user
-    cart = db.query(models.Cart).filter(models.Cart.users_id == user_id).all()
-    
-    
-    
-    for item in cart:
-        for i in range(item.quantity):
-            db
-        print(item.albums_id)
-    
-    # db.commit()
+
+    price_to_pay = get_cart_price(db, user_id)["price"]
+
+    cart_items = db.query(models.Cart).filter(models.Cart.users_id == user_id).all()
+
+    for item in cart_items:
+        db.delete(item)
+        db.commit()
+
+    return {"message": "paid {}, emptying cart".format(price_to_pay)}
