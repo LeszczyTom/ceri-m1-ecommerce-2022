@@ -157,23 +157,21 @@ def rem_album_from_cart(db: Session, user_id: int, album_id: int, quantity: int)
     status_msg = {}
 
     album_stock = db.query(models.Album).filter(models.Album.id == album_id).first()
-    album_to_remove = (db.query(models.Cart)
+    album_to_remove = (
+        db.query(models.Cart)
         .filter(models.Cart.users_id == user_id)
         .filter(models.Cart.albums_id == album_id)
-        .first())
-    
+        .first()
+    )
+
     if album_stock is None:
         return {"message": "Album does not exist"}
 
     if quantity <= 0:
         return {"message": "Quantity must be greater than 0, dumbass"}
 
-    if (
-        album_to_remove
-        is None
-    ):  # Verify that item is in cart
+    if album_to_remove is None:  # Verify that item is in cart
         return {"message": "Item not in cart"}
-
 
     if album_to_remove.quantity > quantity:
         album_to_remove.quantity -= quantity
