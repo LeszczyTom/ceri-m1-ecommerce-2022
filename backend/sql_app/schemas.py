@@ -14,6 +14,11 @@ class Artist(BaseModel):
 class Album(BaseModel):
     id: int
     name: str
+    year: int
+    price: float
+    cover: str
+    stock: int
+
     artists_id: int
     year: int
     price: float
@@ -27,6 +32,9 @@ class Album(BaseModel):
 class Song(BaseModel):
     id: int
     name: str
+    genre: str
+    duration: int
+
     albums_id: int
     genre: str
     duration: str
@@ -41,6 +49,10 @@ class User(BaseModel):
     lname: str
     email: str
     pwd: str
+    address: str
+    zipcode: str
+    city: str
+    country: str
     address: str
     zipcode: str
     city: str
@@ -69,3 +81,14 @@ class Cart_item(BaseModel):
 
 class Price(BaseModel):
     price: int
+
+
+class Orders_items(BaseModel):
+    id: int
+    quantity: int
+
+    albums_id: int
+    orders_id: int
+
+    class Config:
+        orm_mode = True

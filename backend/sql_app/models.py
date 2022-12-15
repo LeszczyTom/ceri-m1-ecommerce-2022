@@ -1,4 +1,5 @@
 from sqlalchemy import Boolean, Column, Float, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
 from .database import Base
@@ -14,6 +15,10 @@ class Album(Base):
     __tablename__ = "albums"
     id = Column(Integer, primary_key=True)
     name = Column(String)
+    year = Column(Integer)
+    price = Column(Float)
+    cover = Column(String)
+    stock = Column(Integer)
     year = Column(Integer)
     price = Column(Float)
     cover = Column(String)
@@ -54,7 +59,10 @@ class Cart(Base):
     albums_id = Column(Integer, ForeignKey("albums.id"))
 
 
-# from sqlalchemy.orm import sessionmaker
+class Orders_items(Base):
+    __tablename__ = "orders_item"
+    id = Column(Integer, primary_key=True)
+    quantity = Column(Integer)
 
-# Session = sessionmaker(bind=engine)
-# session = Session()
+    albums_id = Column(Integer, ForeignKey("albums.id"))
+    orders_id = Column(Integer, ForeignKey("orders.id"))

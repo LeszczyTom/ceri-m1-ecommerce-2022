@@ -130,3 +130,8 @@ def get_cart_price(user_id: int, db: Session = Depends(get_db)):
 @app.get("/pay_cart/{userid}", summary="Pays the cart of a user")
 def pay_cart(userid: int, db: Session = Depends(get_db)):
     return crud.pay_cart(db, userid)
+
+
+@app.post("/register", summary="Returns true if registration was successful")
+def register(login_credential: schemas.LoginCredential, db: Session = Depends(get_db)):
+    return crud.user_registration(db, login_credential.email, login_credential.pwd)

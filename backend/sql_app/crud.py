@@ -219,3 +219,16 @@ def pay_cart(db: Session, user_id: int):
         db.commit()
 
     return {"message": "paid {}, emptying cart".format(price_to_pay)}
+
+
+def user_registration(db: Session, email: str, pwd: str):
+    """
+    Registers a new user
+    """
+    exists = db.query(models.User.email).filter_by(email=email).first() is not None
+    if exists:
+        return False
+
+    db.add(models.User(email=email, pwd=pwd))
+    db.commit()
+    return True
