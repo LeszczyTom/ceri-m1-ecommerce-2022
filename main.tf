@@ -13,7 +13,7 @@ data "google_secret_manager_secret" "address" {
 }
 
 data "google_secret_manager_secret" "database" {
-  secret_id = "mysql--database-pinkzebra"
+  secret_id = "mysql-database-pinkzebra"
 }
 
 provider "google" {
@@ -67,5 +67,5 @@ resource "google_cloud_run_service" "pinkzebra_frontend" {
 }
 
 output "url" {
-  value = google_cloud_run_service.front.status[0].url
+  value = google_cloud_run_service.pinkzebra_frontend.status[0].url
 }
