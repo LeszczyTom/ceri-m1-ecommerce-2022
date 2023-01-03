@@ -6,7 +6,7 @@ WORKDIR /app
 
 ARG env
 
-ENV PORT 1234
+ENV PORT 8080
 
 RUN touch .env
 
