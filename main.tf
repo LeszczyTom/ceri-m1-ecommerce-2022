@@ -8,13 +8,22 @@ terraform {
   }
 }
 
-data "google_secret_manager_secret" "address" {
+data "google_secret_manager_secret" "user" {
+  secret_id = "mysql-user-whitehorse"
+}
+
+data "google_secret_manager_secret" "password" {
+  secret_id = "mysql-password-whitehorse"
+}
+
+data "google_secret_manager_secret" "dbname" {
+  secret_id = "mysql-database-whitehorse"
+}
+
+data "google_secret_manager_secret" "host" {
   secret_id = "mysql-address"
 }
 
-data "google_secret_manager_secret" "database" {
-  secret_id = "mysql-database-pinkzebra"
-}
 
 provider "google" {
   project = "ceri-m1-ecommerce-2022"
@@ -45,10 +54,41 @@ resource "google_cloud_run_service" "pinkzebra_backend" {
       containers {
         image = "europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/pinkzebra/backend:latest"
         env {
-          name = data.google_secret_manager_secret.database.secret_id
+          name = "DB_USER"
           value_from {
             secret_key_ref {
-              name = data.google_secret_manager_secret.address.secret_id
+              name = data.google_secret_manager_secret.user.secret_id
+              key  = "latest"
+            }
+          }
+        }
+        env {
+          name = "DB_PWD"
+          value_from {
+            secret_key_ref {
+              name = data.google_secret_manager_secret.password.secret_id
+              key  = "latest"
+            }
+          }
+        }
+        env {
+          name = "DB_HOSTNAME"
+          value_from {
+            secret_key_ref {
+              name = data.google_secret_manager_secret.host.secret_id
+              key  = "latest"
+            }
+          }
+        }
+        env {
+          name  = "DB_PORT"
+          value = 8080
+        }
+        env {
+          name = "DB_SCHEMA"
+          value_from {
+            secret_key_ref {
+              name = data.google_secret_manager_secret.dbname.secret_id
               key  = "latest"
             }
           }
