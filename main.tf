@@ -9,7 +9,11 @@ terraform {
 }
 
 data "google_secret_manager_secret" "address" {
-  secret_id = "mysql/address"
+  secret_id = "mysql-address"
+}
+
+data "google_secret_manager_secret" "database" {
+  secret_id = "mysql--database-pinkzebra"
 }
 
 provider "google" {
@@ -17,8 +21,15 @@ provider "google" {
   region  = "europe-west1"
 }
 
-resource "google_cloud_run_service" "back" {
-  name     = "cloud-run-backend"
+resource "google_cloud_run_service_iam_member" "invokers" {
+  location = google_cloud_run_service.pinkzebra_backend.location
+  service  = google_cloud_run_service.pinkzebra_backend.name
+  role     = "roles/run.invoker"
+  member   = "allUsers"
+}
+
+resource "google_cloud_run_service" "pinkzebra_backend" {
+  name     = "pinkzebra-backend"
   location = "europe-west1"
 
   template {
@@ -27,10 +38,10 @@ resource "google_cloud_run_service" "back" {
       containers {
         image = "europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/pinkzebra/backend:latest"
         env {
-          name = "DATABASE_ADDRESS"
+          name = data.google_secret_manager_secret.database.secret_id
           value_from {
             secret_key_ref {
-              name = "mysql-address" # data.google_secret_manager_secret.address.secret_id
+              name = data.google_secret_manager_secret.address.secret_id
               key  = "latest"
             }
           }
@@ -40,8 +51,8 @@ resource "google_cloud_run_service" "back" {
   }
 }
 
-resource "google_cloud_run_service" "front" {
-  name     = "cloud-run-frontend"
+resource "google_cloud_run_service" "pinkzebra_frontend" {
+  name     = "pinkzebra-frontend"
   location = "europe-west1"
 
 
