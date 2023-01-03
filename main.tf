@@ -9,15 +9,15 @@ terraform {
 }
 
 data "google_secret_manager_secret" "user" {
-  secret_id = "mysql-user-whitehorse"
+  secret_id = "mysql-user-pinkzebra"
 }
 
 data "google_secret_manager_secret" "password" {
-  secret_id = "mysql-password-whitehorse"
+  secret_id = "mysql-password-pinkzebra"
 }
 
 data "google_secret_manager_secret" "dbname" {
-  secret_id = "mysql-database-whitehorse"
+  secret_id = "mysql-database-pinkzebra"
 }
 
 data "google_secret_manager_secret" "host" {
