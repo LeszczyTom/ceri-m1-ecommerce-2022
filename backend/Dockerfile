@@ -18,4 +18,4 @@ RUN python -m pip install -r requirements.txt --upgrade pip
 
 COPY . .
 
-CMD [ "python3", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--reload" ]
+CMD [ "python3", "-m", "uvicorn", "main:app", "--port", "8080", "--host", "0.0.0.0", "--reload" ]
