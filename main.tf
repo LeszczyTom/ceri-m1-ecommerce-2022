@@ -113,6 +113,10 @@ resource "google_cloud_run_service" "pinkzebra_frontend" {
   }
 }
 
-output "url" {
+output "pinkzebra_front_url" {
   value = google_cloud_run_service.pinkzebra_frontend.status[0].url
+}
+
+output "pinkzebra_back_url" {
+  value = google_cloud_run_service.pinkzebra_backend.status[0].url
 }
