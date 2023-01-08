@@ -87,3 +87,7 @@ class Orders_items(BaseModel):
 
     class Config:
         orm_mode = True
+
+class Update_stock(BaseModel):
+    album_id: int
+    stock: int

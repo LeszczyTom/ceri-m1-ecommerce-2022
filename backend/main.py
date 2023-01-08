@@ -156,3 +156,7 @@ def read_orders(db: Session = Depends(get_db)):
 @app.get("/orders/{user_id}", summary="Returns all orders of a user")
 def read_orders_by_user_id(user_id: int, db: Session = Depends(get_db)):
     return crud.get_orders(db, user_id)
+
+@app.post("/update_stock", summary="Updates the stock of an album")
+def update_stock(update_info: schemas.Update_stock, db: Session = Depends(get_db)):
+    return crud.update_stock(db, update_info.album_id, update_info.stock)

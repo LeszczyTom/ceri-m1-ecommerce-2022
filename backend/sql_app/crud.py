@@ -265,3 +265,19 @@ def get_orders(db: Session, user_id: int):
         
     
     return to_return
+
+
+def update_stock(db: Session, album_id: int, stock: int):
+    """
+    Updates the stock of an album
+    """
+    album = db.query(models.Album).filter(models.Album.id == album_id).first()
+    if album is None:
+        return {"message": "Album does not exist"}
+
+    if stock <= 0:
+        return {"message": "Quantity must be greater than 0, dumbass"}
+    
+    album.stock = stock
+    db.commit()
+    return {"message": "Stock updated"}
