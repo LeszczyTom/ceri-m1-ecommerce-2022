@@ -108,6 +108,8 @@ def check_credentials(db: Session, email: str, pwd: str):
         .first()
         != None
     ):
+        if db.query(models.User).filter(models.User.email == email).first():
+            return "admin"
         return True
 
     return False

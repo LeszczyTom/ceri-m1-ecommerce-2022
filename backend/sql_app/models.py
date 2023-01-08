@@ -47,6 +47,7 @@ class User(Base):
     zipcode = Column(String)
     city = Column(String)
     country = Column(String)
+    admin = Column(Boolean)
 
 
 class Cart(Base):

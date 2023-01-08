@@ -43,6 +43,7 @@ class User(BaseModel):
     zipcode: str
     city: str
     country: str
+    admin: bool
 
     class Config:
         orm_mode = True
