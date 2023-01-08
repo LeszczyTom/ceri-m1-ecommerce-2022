@@ -8,17 +8,44 @@ terraform {
   }
 }
 
-data "google_secret_manager_secret" "address" {
-  secret_id = "mysql/address"
+data "google_secret_manager_secret" "user" {
+  secret_id = "mysql-user-pinkzebra"
 }
+
+data "google_secret_manager_secret" "password" {
+  secret_id = "mysql-password-pinkzebra"
+}
+
+data "google_secret_manager_secret" "dbname" {
+  secret_id = "mysql-database-pinkzebra"
+}
+
+data "google_secret_manager_secret" "host" {
+  secret_id = "mysql-address"
+}
+
 
 provider "google" {
   project = "ceri-m1-ecommerce-2022"
   region  = "europe-west1"
 }
 
-resource "google_cloud_run_service" "back" {
-  name     = "cloud-run-backend"
+resource "google_cloud_run_service_iam_member" "invokers_back" {
+  location = google_cloud_run_service.pinkzebra_backend.location
+  service  = google_cloud_run_service.pinkzebra_backend.name
+  role     = "roles/run.invoker"
+  member   = "allUsers"
+}
+
+resource "google_cloud_run_service_iam_member" "invokers_front" {
+  location = google_cloud_run_service.pinkzebra_frontend.location
+  service  = google_cloud_run_service.pinkzebra_frontend.name
+  role     = "roles/run.invoker"
+  member   = "allUsers"
+}
+
+resource "google_cloud_run_service" "pinkzebra_backend" {
+  name     = "pinkzebra-backend"
   location = "europe-west1"
 
   template {
@@ -27,10 +54,41 @@ resource "google_cloud_run_service" "back" {
       containers {
         image = "europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/pinkzebra/backend:latest"
         env {
-          name = "DATABASE_ADDRESS"
+          name = "DB_USER"
           value_from {
             secret_key_ref {
-              name = "mysql-address" # data.google_secret_manager_secret.address.secret_id
+              name = data.google_secret_manager_secret.user.secret_id
+              key  = "latest"
+            }
+          }
+        }
+        env {
+          name = "DB_PWD"
+          value_from {
+            secret_key_ref {
+              name = data.google_secret_manager_secret.password.secret_id
+              key  = "latest"
+            }
+          }
+        }
+        env {
+          name = "DB_HOSTNAME"
+          value_from {
+            secret_key_ref {
+              name = data.google_secret_manager_secret.host.secret_id
+              key  = "latest"
+            }
+          }
+        }
+        env {
+          name  = "DB_PORT"
+          value = 8080
+        }
+        env {
+          name = "DB_SCHEMA"
+          value_from {
+            secret_key_ref {
+              name = data.google_secret_manager_secret.dbname.secret_id
               key  = "latest"
             }
           }
@@ -40,8 +98,8 @@ resource "google_cloud_run_service" "back" {
   }
 }
 
-resource "google_cloud_run_service" "front" {
-  name     = "cloud-run-frontend"
+resource "google_cloud_run_service" "pinkzebra_frontend" {
+  name     = "pinkzebra-frontend"
   location = "europe-west1"
 
 
@@ -55,6 +113,10 @@ resource "google_cloud_run_service" "front" {
   }
 }
 
-output "url" {
-  value = google_cloud_run_service.front.status[0].url
+output "pinkzebra_front_url" {
+  value = google_cloud_run_service.pinkzebra_frontend.status[0].url
+}
+
+output "pinkzebra_back_url" {
+  value = google_cloud_run_service.pinkzebra_backend.status[0].url
 }
