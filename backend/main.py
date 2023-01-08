@@ -147,3 +147,12 @@ def pay_cart(userid: int, db: Session = Depends(get_db)):
 @app.post("/register", summary="Returns true if registration was successful")
 def register(login_credential: schemas.LoginCredential, db: Session = Depends(get_db)):
     return crud.user_registration(db, login_credential.email, login_credential.pwd)
+
+
+@app.get("/orders", summary="Returns all orders")
+def read_orders(db: Session = Depends(get_db)):
+    return crud.get_orders(db, None)
+    
+@app.get("/orders/{user_id}", summary="Returns all orders of a user")
+def read_orders_by_user_id(user_id: int, db: Session = Depends(get_db)):
+    return crud.get_orders(db, user_id)

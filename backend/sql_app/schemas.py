@@ -69,6 +69,14 @@ class Cart_item(BaseModel):
 class Price(BaseModel):
     price: int
 
+class Orders(BaseModel):
+    id: int
+    date: str
+    total: float
+    state: str
+
+    class Config:
+        orm_mode = True
 
 class Orders_items(BaseModel):
     id: int

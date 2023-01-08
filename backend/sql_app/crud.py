@@ -234,3 +234,34 @@ def user_registration(db: Session, email: str, pwd: str):
     db.add(models.User(email=email, pwd=pwd))
     db.commit()
     return True
+
+
+def get_orders(db: Session, user_id: int):
+    """
+    Returns all orders
+    Also return user_id item if not None
+    """
+    
+    if user_id is None:  
+        orders_vanilla = db.query(models.Orders).all()
+    elif user_id is not None:
+        orders_vanilla = db.query(models.Orders).filter(models.Orders.users_id == user_id).all()    
+    
+        
+    to_return = []
+    
+    for order in orders_vanilla:
+        # print("order id : ", order.id)
+        obj = {"customerId": order.users_id, "orderNumber": order.id, "total": order.total_price, "status": order.state}
+        items = []
+        order_items = db.query(models.Orders_items).filter(models.Orders_items.orders_id == order.id).all()
+        for item in order_items:
+            album = db.query(models.Album).filter(models.Album.id == item.albums_id).first()
+            print(album.__dict__)
+            items.append({"productId": album.id, "name": album.name, "quantity": item.quantity, "price": album.price})
+
+            obj["items"] = items
+        to_return.append(obj)
+        
+    
+    return to_return
