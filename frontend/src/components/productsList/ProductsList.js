@@ -34,6 +34,7 @@ function ProductsList(props) {
         (q.price >= filtersMinPrice && q.price <= filtersMaxPrice)
       )
     }));
+
   }, [props.records, allRecords, filtersGenres, filtersArtists, filtersAlbums, filtersMinYear, filtersMaxYear, filtersMinPrice, filtersMaxPrice]);
 
 
@@ -177,7 +178,7 @@ function ProductsList(props) {
               <input className="inputPrix" type="number" placeholder="100" onKeyDown={handleMaxPriceKeyDown} onBlur={handleMaxPriceChange} />
           </div>
         </div>
-        
+        {/*
         <div className="filter">
           <h3>Genre</h3>
           <div className="filterOptions">
@@ -229,6 +230,7 @@ function ProductsList(props) {
             
           </div>
         </div>
+         */}
 
         <div className="filter">
           <h3>Année</h3>
@@ -265,7 +267,7 @@ function ProductsList(props) {
               <input className="inputPrix" type="number" placeholder="100" onKeyDown={handleMaxPriceKeyDown} onBlur={handleMaxPriceChange} />
           </div>
         </div>
-        
+        {/*
         <div className="filter">
           <h3>Genre</h3>
           <div className="filterOptions">
@@ -317,7 +319,7 @@ function ProductsList(props) {
             
           </div>
         </div>
-
+         */}
         <div className="filter">
           <h3>Année</h3>
           <div className="filterOptions">

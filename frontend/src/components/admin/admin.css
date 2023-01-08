@@ -73,3 +73,32 @@
     text-align: left;
     margin-bottom: 20px;
 } 
+
+.ordersList {
+    overflow: hidden;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    margin-top: 50px;
+}
+
+.orderItem {
+    /* Align the items in the center */
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    width: 70%;
+    /* Set the background color */
+    background-color: white;
+    /* Set the margin */
+    margin: auto;
+    border-bottom: 1px solid rgba(0,0,0,1);
+    margin-top: 50px;
+}
+
+.orderItem div {
+    /* Set the margin */
+    margin: 10px 50px;
+    width: 100%;
+}

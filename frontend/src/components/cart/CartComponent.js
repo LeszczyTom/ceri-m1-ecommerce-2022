@@ -5,6 +5,14 @@ import { CartContext } from '../../CartContext';
 function Cart() {
     const { cart, total, addToCart, clearItem, removeFromCart, clearCart } = useContext(CartContext);
 
+    const handleLogin = () => {
+        if(sessionStorage.getItem('userStatus') === 'false') {
+            alert("Vous devez être connecté pour passer au paiement");
+        } else {
+            alert("Commande validée" + JSON.stringify(cart));
+        }
+    }
+
     if (cart.length === 0) {
         return (
             <div className="cart">
@@ -31,7 +39,7 @@ function Cart() {
                     <button className="plus-btn" type="button" name="button" onClick={() => addToCart(item)}>
                         +
                     </button>
-                    <input type="text" name="name" value={item.quantity}/>
+                    <input type="number" name="name" value={item.quantity}/>
                     <button className="minus-btn" type="button" name="button" onClick={() => removeFromCart(item)}>
                         -
                     </button>
@@ -44,6 +52,7 @@ function Cart() {
                 <div className="total" style={{padding: "50px"}}>
                     <p>Total</p>
                     <p>{total}€</p>
+                    <a className="clear-cart-btn" onClick={handleLogin}>Acheter</a>
                     <a className="clear-cart-btn" onClick={clearCart}>Vider le panier</a>
                 </div>
             </div>

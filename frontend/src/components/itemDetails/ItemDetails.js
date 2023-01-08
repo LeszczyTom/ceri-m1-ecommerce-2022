@@ -1,38 +1,69 @@
 
 import Animation from "./Animation";
 import {useParams} from "react-router-dom"
-import Records from '../../data.json';
 import { CartContext } from "../../CartContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { useState } from "react";
 
 export default function ItemDetails() {
     const {productId} = useParams()
-    const thisProduct = Records.find(record => record.id === productId)
+    const [thisAlbum, setthisAlbum] = useState(
+        {
+            title: "",
+            album: "",
+            artist: "",
+            cover: "",
+            price: "",
+            genre: ""
+        }
+    );
+
+    const [thisArtist, setthisArtist] = useState(
+        {
+            name: "",
+        }
+    );
+
+    useEffect(() => {
+        fetch(process.env.REACT_APP_SERVER_URL + '/albums/'+productId)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            setthisAlbum(data);
+            if(thisAlbum.artists_id){
+                fetch(process.env.REACT_APP_SERVER_URL + '/artists/'+thisAlbum.artists_id)
+                .then(response => response.json())
+                .then(data => {
+                    console.log("data", data)
+                    setthisArtist(data);
+                })
+            }
+        })
+        
+    },[thisAlbum.artists_id])
+ 
     const {cart, addToCart} = useContext(CartContext)
 
     const handleCart = () => {
-        addToCart(thisProduct)
+        addToCart(thisAlbum)
     }
 
     return (
         <div className="details" id="details">
             <div className="animationContainer" id="animationContainer">
                 <div className="coverContainer">
-                    <img src={thisProduct.cover} alt="cover" className="coverSong"/>
+                    <img src={thisAlbum.cover} alt="cover" className="coverSong"/>
                 </div>
                 <Animation/>
             </div>
             <div className="detailsContainer">
                 <div>
                     <div className="songDetails">
-                        <p className="titleSong">{thisProduct.title}</p>
-                        <p className="albumSong">"{thisProduct.album}" - {thisProduct.artist}</p>
+                        <p className="titleSong">{thisAlbum.name}</p>
+                        <p className="albumSong">{thisArtist.name}</p>
                     </div>
                     <div className="priceSong">
-                        <p>{thisProduct.price}€</p>
-                    </div>
-                    <div className="genreSong">
-                        <p>Genre : <strong>{thisProduct.genre}</strong></p>
+                        <p>{thisAlbum.price}€</p>
                     </div>
                     <p className="addToCartBtn" onClick={handleCart}>Ajouter au panier</p>
                 </div>

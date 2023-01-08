@@ -6,9 +6,9 @@ import Footer from './components/footer/Footer';
 import UserForm from './components/user-form/UserForm';
 import Navbar from './components/navbar/Navbar';
 import Cart from './components/cart/CartComponent';
-import Records from './data.json'
 import {useEffect, useState} from "react"
 import { CartProvider } from "./CartContext";
+import Admin from './components/admin/Admin';
 
 function App() {
 
@@ -16,10 +16,12 @@ function App() {
   const [recordsList, setRecordsList] = useState();
 
   const fetchData = async () => {
-    /*
-    * TODO: Fetch data from API
-    */
-    setRecordsList(Records)
+    fetch(process.env.REACT_APP_SERVER_URL + '/albums')
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      setRecordsList(data);
+    })
   }
 
   const updateInput = async (input) => {
@@ -29,11 +31,24 @@ function App() {
     setInput(input);
     setRecordsList(filtered);
     if(input===""){
-      setRecordsList(Records)
+      fetch(process.env.REACT_APP_SERVER_URL + '/albums')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        setRecordsList(data);
+      })
     }
  }
 
-  useEffect( () => {fetchData()},[]);
+  //save login status in session storage
+  const [userLogged, setuserLogged] = useState();
+
+  useEffect( () => {
+    fetchData()
+    if(sessionStorage.getItem('userStatus') === null) {
+      sessionStorage.setItem('userStatus', false);
+    }
+  },[]);
 
   return (
     <div className="App">
@@ -51,6 +66,7 @@ function App() {
             <Route path="/product/:productId" element={<ItemDetails/>}/>
             <Route path="/cart" element={<Cart/>}/>
             <Route path="/user-form" element={<UserForm/>}/>
+            <Route path="/admin" element={<Admin records={recordsList} />}/>
           </Routes>
       </CartProvider>
       </Router>

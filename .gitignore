@@ -1,6 +1,5 @@
 .vscode
 .DS_Store
-.env
 logfile.log
 .mypy_cache
 
@@ -45,3 +44,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 backend/issue 16,17 et 18.md
+cloud-sql-proxy.exe
+keyy.json
+/.env
