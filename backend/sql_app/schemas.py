@@ -15,6 +15,7 @@ class Album(BaseModel):
     id: int
     name: str
     year: int
+    artists_id: int
     price: float
     cover: str
     stock: int
@@ -43,6 +44,7 @@ class User(BaseModel):
     zipcode: str
     city: str
     country: str
+    admin: bool
 
     class Config:
         orm_mode = True
@@ -69,12 +71,45 @@ class Price(BaseModel):
     price: int
 
 
+class Orders(BaseModel):
+    id: int
+    date: str
+    total: float
+    state: str
+
+    class Config:
+        orm_mode = True
+
+
 class Orders_items(BaseModel):
     id: int
     quantity: int
 
     albums_id: int
     orders_id: int
+    user_id: int
 
     class Config:
         orm_mode = True
+
+
+class Update_stock(BaseModel):
+    album_id: int
+    stock: int
+
+
+class Album_to_add(BaseModel):
+    name: str
+    artist: str
+    year: int
+    price: float
+    cover: str
+    stock: int
+
+    class Config:
+        orm_mode = True
+
+
+class Order_update(BaseModel):
+    id: int
+    state: str

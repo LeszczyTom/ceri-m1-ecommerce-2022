@@ -109,6 +109,8 @@ def check_credentials(db: Session, email: str, pwd: str):
         .first()
         != None
     ):
+        if db.query(models.User).filter(models.User.email == email).first().admin == 1:  # type: ignore
+            return "admin"
         return True
 
     return False
@@ -150,6 +152,18 @@ def add_album_to_cart(db: Session, user_id: int, album_id: int, quantity: int):
 
     return status_msg
 
+
+def get_user_cart(db: Session, user_id):
+    """
+    Return user cart
+    """
+    
+    albums_in_cart = db.query(models.Album, models.Cart.quantity).join(models.Cart, models.Album.id == models.Cart.albums_id).all()
+    
+    
+    
+    return albums_in_cart
+    
 
 def rem_album_from_cart(db: Session, user_id: int, album_id: int, quantity: int):
     """
@@ -206,18 +220,43 @@ def get_cart_price(db: Session, user_id: int):
     return {"price": cart_price}
 
 
+from datetime import datetime
+
+
 def pay_cart(db: Session, user_id: int):
     """
     Pays the cart
     """
 
-    price_to_pay = get_cart_price(db, user_id)["price"]
-
     cart_items = db.query(models.Cart).filter(models.Cart.users_id == user_id).all()
 
+    if len(cart_items) == 0:
+        return {"message": "Cart is empty"}
+
+    now = datetime.now()
+
+    price_to_pay = get_cart_price(db, user_id)["price"]
+
+    new_order = models.Orders(
+        order_date=now.strftime("%d/%m/%Y"),
+        total_price=price_to_pay,
+        state="pending",
+        users_id=user_id,
+    )
+
+    db.add(new_order)
+    db.flush()
+    db.refresh(new_order)
+
     for item in cart_items:
+        db.add(
+            models.Orders_items(
+                quantity=item.quantity, albums_id=item.albums_id, orders_id=new_order.id
+            )
+        )
         db.delete(item)
-        db.commit()
+
+    db.commit()
 
     return {"message": "paid {}, emptying cart".format(price_to_pay)}
 
@@ -233,3 +272,151 @@ def user_registration(db: Session, email: str, pwd: str):
     db.add(models.User(email=email, pwd=pwd))
     db.commit()
     return True
+
+
+def get_orders(db: Session, user_id: int):
+    """
+    Returns all orders
+    Also return user_id item if not None
+    """
+
+    if user_id is None:
+        orders_vanilla = db.query(models.Orders).all()
+    elif user_id is not None:
+        orders_vanilla = (
+            db.query(models.Orders).filter(models.Orders.users_id == user_id).all()
+        )
+
+    to_return = []
+
+    for order in orders_vanilla:
+        # print("order id : ", order.id)
+        obj = {
+            "customerId": order.users_id,
+            "orderNumber": order.id,
+            "total": order.total_price,
+            "status": order.state,
+        }
+        items = []
+        order_items = (
+            db.query(models.Orders_items)
+            .filter(models.Orders_items.orders_id == order.id)
+            .all()
+        )
+        for item in order_items:
+            album = (
+                db.query(models.Album).filter(models.Album.id == item.albums_id).first()
+            )
+            print(album.__dict__)
+            items.append(
+                {
+                    "productId": album.id,  # type: ignore
+                    "name": album.name,  # type: ignore
+                    "quantity": item.quantity,  # type: ignore
+                    "price": album.price,  # type: ignore
+                }
+            )
+
+            obj["items"] = items
+        to_return.append(obj)
+
+    return to_return
+
+
+def update_stock(db: Session, album_id: int, stock: int):
+    """
+    Updates the stock of an album
+    """
+    album = db.query(models.Album).filter(models.Album.id == album_id).first()
+    if album is None:
+        return {"message": "Album does not exist"}
+
+    if stock <= 0:
+        return {"message": "Quantity must be greater than 0, dumbass"}
+
+    album.stock = stock
+    db.commit()
+    return {"message": "Stock updated"}
+
+
+def delete_album(db: Session, album_id: int):
+    """
+    Delete an album from db
+    """
+    album = db.query(models.Album).filter(models.Album.id == album_id).first()
+    if album is None:
+        return {"message": "Album not found"}
+    db.delete(album)
+
+    db.commit()
+
+    album = db.query(models.Album).filter(models.Album.id == album_id).first()
+
+    if album is None:
+        return {"message": "Album deleted"}
+
+    return {"message": "Something wrong happened"}
+
+
+def add_album(db: Session, album):
+
+    exists = db.query(models.Album).filter_by(name=album.name).first()
+    artist_id = (
+        db.query(models.Artist).filter(models.Artist.name.ilike(album.artist)).first()
+    )
+
+    if artist_id is None:
+        new_artist = models.Artist(name=album.artist)
+        db.add(new_artist)
+        db.commit()
+
+    print("exists", exists)
+    if exists:
+        return {"message": "Album already in db"}
+
+    album_to_add = models.Album(
+        name=album.name,
+        artists_id=artist_id.id,  # type: ignore
+        year=album.year,
+        price=album.price,
+        cover=album.cover,
+        stock=album.stock,
+    )
+
+    db.add(album_to_add)
+    db.commit()
+
+    return {"message": "Album added"}
+
+
+def update_order(db: Session, order):
+    """
+    Updates an order
+    """
+
+    order_to_edit = db.query(models.Orders).filter(models.Orders.id == order.id).first()
+
+    if order_to_edit is None:
+        return {"message": "Order not found"}
+
+    order_to_edit.state = order.state
+
+    print("type", type(order_to_edit))
+    db.commit()
+
+    return {"message": "Order updated"}
+
+
+def delete_order(db: Session, order_id):
+    """
+    Delete an order with a giving id
+    """
+    order = db.query(models.Orders).filter(models.Orders.id == order_id).first()
+
+    if order is None:
+        return {"message": "Order not found"}
+
+    db.delete(order)
+    db.commit()
+
+    return {"message": "Order deleted"}

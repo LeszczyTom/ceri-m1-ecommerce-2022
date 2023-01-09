@@ -1,6 +1,3 @@
-import os
-
-from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -9,16 +6,6 @@ import sql_app.crud as crud
 import sql_app.models as models
 import sql_app.schemas as schemas
 from sql_app.database import SessionLocal, engine
-
-load_dotenv()
-
-
-DB_USER = os.environ.get("DB_USER")
-DB_PWD = os.environ.get("DB_PWD")
-DB_HOSTNAME = os.environ.get("DB_HOSTNAME")
-DB_PORT = os.environ.get("DB_PORT")
-DB_SCHEMA = os.environ.get("DB_SCHEMA")
-
 
 app = FastAPI()
 
@@ -46,10 +33,7 @@ def get_db():
 @app.get("/")
 async def root():
     # return {"message": "Hello World"}
-    return {
-        "test",
-        f"mysql+pymysql://{DB_USER}:{DB_PWD}@/{DB_SCHEMA}?unix_socket=/cloudsql/ceri-m1-ecommerce-2022:europe-west1:mysql-primary",
-    }
+    return { "hello", "world" }
 
 
 @app.get("/artists", summary="Returns all artists")
@@ -165,3 +149,38 @@ def pay_cart(userid: int, db: Session = Depends(get_db)):
 @app.post("/register", summary="Returns true if registration was successful")
 def register(login_credential: schemas.LoginCredential, db: Session = Depends(get_db)):
     return crud.user_registration(db, login_credential.email, login_credential.pwd)
+
+
+@app.get("/orders", summary="Returns all orders")
+def read_orders(db: Session = Depends(get_db)):
+    return crud.get_orders(db, None)
+
+
+@app.get("/orders/{user_id}", summary="Returns all orders of a user")
+def read_orders_by_user_id(user_id: int, db: Session = Depends(get_db)):
+    return crud.get_orders(db, user_id)
+
+
+@app.post("/update_stock", summary="Updates the stock of an album")
+def update_stock(update_info: schemas.Update_stock, db: Session = Depends(get_db)):
+    return crud.update_stock(db, update_info.album_id, update_info.stock)
+
+
+@app.delete("/delete_album/{album_id}", summary="Deletes an album")
+def delete_album(album_id: int, db: Session = Depends(get_db)):
+    return crud.delete_album(db, album_id)
+
+
+@app.post("/add_album", summary="Adds an album")
+def add_album(album: schemas.Album_to_add, db: Session = Depends(get_db)):
+    return crud.add_album(db, album)
+
+
+@app.post("/update_order", summary="Updates an order")
+def update_order(order: schemas.Order_update, db: Session = Depends(get_db)):
+    return crud.update_order(db, order)
+
+
+@app.delete("/delete_order/{order_id}", summary="Deletes an order")
+def delete_order(order_id: int, db: Session = Depends(get_db)):
+    return crud.delete_order(db, order_id)
