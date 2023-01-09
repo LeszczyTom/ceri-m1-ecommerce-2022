@@ -1,3 +1,6 @@
+import os
+
+from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -6,6 +9,16 @@ import sql_app.crud as crud
 import sql_app.models as models
 import sql_app.schemas as schemas
 from sql_app.database import SessionLocal, engine
+
+load_dotenv()
+
+
+DB_USER = os.environ.get("DB_USER")
+DB_PWD = os.environ.get("DB_PWD")
+DB_HOSTNAME = os.environ.get("DB_HOSTNAME")
+DB_PORT = os.environ.get("DB_PORT")
+DB_SCHEMA = os.environ.get("DB_SCHEMA")
+
 
 app = FastAPI()
 
@@ -32,7 +45,8 @@ def get_db():
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    # return {"message": "Hello World"}
+    return {"test:": DB_HOSTNAME}
 
 
 @app.get("/artists", summary="Returns all artists")
