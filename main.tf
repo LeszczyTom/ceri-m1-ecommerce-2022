@@ -24,11 +24,20 @@ data "google_secret_manager_secret" "host" {
   secret_id = "mysql-address"
 }
 
-
 provider "google" {
   project = "ceri-m1-ecommerce-2022"
   region  = "europe-west1"
 }
+
+data "google_secret_manager_secret_version" "mysql-address" {
+  provider = google
+  secret = mysql-address
+}
+
+variable "MYSQL_ADDRESS" {
+  default=data.google_secret_manager_secret_version.mysql-address.payload
+}
+
 
 resource "google_cloud_run_service_iam_member" "invokers_back" {
   location = google_cloud_run_service.pinkzebra_backend.location
@@ -52,7 +61,7 @@ resource "google_cloud_run_service" "pinkzebra_backend" {
     spec {
       service_account_name = "terraform-pinkzebra@ceri-m1-ecommerce-2022.iam.gserviceaccount.com"
       containers {
-        image = "europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/pinkzebra/backend:0.1.0"
+        image = "europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/pinkzebra/backend:0.1.1"
         env {
           name = "DB_USER"
           value_from {
@@ -73,12 +82,7 @@ resource "google_cloud_run_service" "pinkzebra_backend" {
         }
         env {
           name = "DB_HOSTNAME"
-          value_from {
-            secret_key_ref {
-              name = data.google_secret_manager_secret.host.secret_id
-              key  = "latest"
-            }
-          }
+          value = var.MYSQL_ADDRESS
         }
         env {
           name  = "DB_PORT"

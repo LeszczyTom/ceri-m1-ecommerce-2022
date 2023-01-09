@@ -46,7 +46,7 @@ def get_db():
 @app.get("/")
 async def root():
     # return {"message": "Hello World"}
-    return {"test:": DB_HOSTNAME}
+    return {"test", "{}/{}".format(DB_HOSTNAME, DB_PORT)}
 
 
 @app.get("/artists", summary="Returns all artists")
