@@ -16,10 +16,16 @@ DB_SCHEMA = os.environ.get("DB_SCHEMA")
 
 
 print("mysql://{}:{}@{}:{}/{}".format(DB_USER, DB_PWD, DB_HOSTNAME, DB_PORT, DB_SCHEMA))
+connection_name = 'ceri-m1-ecommerce-2022:europe-west1:mysql-primary'
 
 engine = create_engine(
-    "mysql://{}:{}@{}:{}/{}".format(DB_USER, DB_PWD, DB_HOSTNAME, DB_PORT, DB_SCHEMA),
-    echo=True,
+    drivername="mysql+pymysql",
+    username=DB_USER,
+    password=DB_PWD,
+    database=DB_SCHEMA,
+    query={"unix_socket": "{}/{}".format("/cloudsql", connection_name)},
+    # "mysql://{}:{}@{}:{}/{}".format(DB_USER, DB_PWD, DB_HOSTNAME, DB_PORT, DB_SCHEMA),
+    # echo=True,
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
