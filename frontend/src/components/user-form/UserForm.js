@@ -1,5 +1,7 @@
 import './userForm.css';
 import React, { useState, useEffect } from 'react';
+import Cookies from 'universal-cookie';
+
 function UserForm() {
 
     //save login status in local storage
@@ -10,6 +12,7 @@ function UserForm() {
 
     const [emailReg, setEmailReg] = useState('');
     const [passwordReg, setPasswordReg] = useState('');
+    const cookies = new Cookies();
 
     useEffect( () => {
         if(sessionStorage.getItem('userStatus') === null) {
@@ -34,6 +37,10 @@ function UserForm() {
             if(data) {
                 setuserLogged("true");
                 sessionStorage.setItem('userStatus', "true");
+                cookies.set('role', 'user', { path: '/' });
+                if(data === 'admin') {
+                    cookies.set('role', 'admin', { path: '/' });
+                }
             }
             else {
                 alert("Email ou mot de passe incorrect");
@@ -58,6 +65,7 @@ function UserForm() {
             if(data) {
                 setuserLogged("true");
                 sessionStorage.setItem('userStatus', "true");
+                cookies.set('role', 'user', { path: '/' });
             }
             else {
                 alert("Identifiants incorrects ou déjà utilisés");
@@ -69,10 +77,11 @@ function UserForm() {
         e.preventDefault();
         setuserLogged("false");
         sessionStorage.setItem('userStatus', "false");
+        cookies.remove('role', { path: '/' });
     }
 
 
-    if(userLogged=="false") {
+    if(userLogged==="false") {
     return (
         <div className="forms-container">
 
@@ -82,13 +91,13 @@ function UserForm() {
                     <div className="form-group">
                         <label for="exampleInputLname1">Nom</label>
                         <br/>
-                        <input type="test" className="form-control" id="exampleInputLname1" aria-describedby="emailHelp" placeholder="Nom" />
+                        <input type="text" className="form-control" id="exampleInputLname1" aria-describedby="emailHelp" placeholder="Nom" />
                     </div>
 
                     <div className="form-group">
                         <label for="exampleInputFname1">Prénom</label>
                         <br/>
-                        <input type="test" className="form-control" id="exampleInputFname1" aria-describedby="emailHelp" placeholder="Prénom" />
+                        <input type="text" className="form-control" id="exampleInputFname1" aria-describedby="emailHelp" placeholder="Prénom" />
                     </div>
 
                     <div className="form-group">
@@ -106,13 +115,13 @@ function UserForm() {
                     <div className="form-group">
                         <label for="exampleInputAddress1">Adresse</label>
                         <br/>
-                        <input type="test" className="form-control" id="exampleInputAddress1" aria-describedby="emailHelp" placeholder="Adresse" />
+                        <input type="text" className="form-control" id="exampleInputAddress1" aria-describedby="emailHelp" placeholder="Adresse" />
                     </div>
 
                     <div className="form-group">
                         <label for="exampleInputCity1">Ville</label>
                         <br/>
-                        <input type="test" className="form-control" id="exampleInputCity1" aria-describedby="emailHelp" placeholder="Ville" />
+                        <input type="text" className="form-control" id="exampleInputCity1" aria-describedby="emailHelp" placeholder="Ville" />
                     </div>
 
                     <div className="form-group">
@@ -124,7 +133,7 @@ function UserForm() {
                     <div className="form-group">
                         <label for="exampleInputCountry1">Pays</label>
                         <br/>
-                        <input type="test" className="form-control" id="exampleInputCountry1" aria-describedby="emailHelp" placeholder="Pays" />
+                        <input type="text" className="form-control" id="exampleInputCountry1" aria-describedby="emailHelp" placeholder="Pays" />
                     </div>
 
                     <button type="submit" className="submitButton" onClick={handleRegister}>Créer un compte</button>

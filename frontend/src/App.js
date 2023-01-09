@@ -9,6 +9,7 @@ import Cart from './components/cart/CartComponent';
 import {useEffect, useState} from "react"
 import { CartProvider } from "./CartContext";
 import Admin from './components/admin/Admin';
+import PrivateRoutes from './components/utils/PrivateRoutes';
 
 function App() {
 
@@ -40,9 +41,6 @@ function App() {
     }
  }
 
-  //save login status in session storage
-  const [userLogged, setuserLogged] = useState();
-
   useEffect( () => {
     fetchData()
     if(sessionStorage.getItem('userStatus') === null) {
@@ -66,7 +64,9 @@ function App() {
             <Route path="/product/:productId" element={<ItemDetails/>}/>
             <Route path="/cart" element={<Cart/>}/>
             <Route path="/user-form" element={<UserForm/>}/>
-            <Route path="/admin" element={<Admin records={recordsList} />}/>
+            <Route element={<PrivateRoutes/>}>
+              <Route path="/admin" element={<Admin records={recordsList} />}/>
+            </Route>
           </Routes>
       </CartProvider>
       </Router>

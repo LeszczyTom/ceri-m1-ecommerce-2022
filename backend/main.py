@@ -10,7 +10,7 @@ from sql_app.database import SessionLocal, engine
 app = FastAPI()
 
 origins = [
-    "https://pinkzebra-backend-mwjszocsqa-ew.a.run.app",
+    origins = ["*"],
 ]
 
 app.add_middleware(
