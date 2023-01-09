@@ -31,11 +31,11 @@ provider "google" {
 
 data "google_secret_manager_secret_version" "mysql-address" {
   provider = google
-  secret = mysql-address
+  secret   = mysql-address
 }
 
 variable "MYSQL_ADDRESS" {
-  default=data.google_secret_manager_secret_version.mysql-address.payload
+  default = data.google_secret_manager_secret_version.mysql-address.payload
 }
 
 
@@ -81,7 +81,7 @@ resource "google_cloud_run_service" "pinkzebra_backend" {
           }
         }
         env {
-          name = "DB_HOSTNAME"
+          name  = "DB_HOSTNAME"
           value = var.MYSQL_ADDRESS
         }
         env {
