@@ -10,7 +10,7 @@ from sql_app.database import SessionLocal, engine
 app = FastAPI()
 
 origins = [
-    origins = ["*"],
+    "*",
 ]
 
 app.add_middleware(
