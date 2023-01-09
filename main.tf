@@ -72,7 +72,7 @@ resource "google_cloud_run_service" "pinkzebra_backend" {
         }
         env {
           name  = "DB_HOSTNAME"
-          value = var.MYSQL_ADDRESS
+          value = data.google_secret_manager_secret.host.secret_id
         }
         env {
           name  = "DB_PORT"
