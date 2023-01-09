@@ -47,3 +47,6 @@ backend/issue 16,17 et 18.md
 cloud-sql-proxy.exe
 keyy.json
 /.env
+backend/albums.txt
+backend/sql_app/hello_algolia.py
+backend/populate.py
