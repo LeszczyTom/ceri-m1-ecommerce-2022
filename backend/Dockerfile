@@ -18,6 +18,8 @@ ENV DB_PORT=${DB_PORT}
 ENV DB_SCHEMA=${DB_SCHEMA}
 ENV DB_PWD=${DB_PWD}
 
+RUN touch .env | echo -e "DB_USER=$DB_USER \nDB_HOSTNAME=$DB_HOSTNAME \nDB_PORT=$DB_PORT \nDB_SCHEMA=$DB_SCHEMA \nDB_PWD=$DB_PWD" > .env
+
 RUN apk add gcc musl-dev mariadb-connector-c-dev
 
 COPY requirements.txt requirements.txt
