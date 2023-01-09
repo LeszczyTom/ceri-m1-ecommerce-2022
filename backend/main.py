@@ -46,7 +46,10 @@ def get_db():
 @app.get("/")
 async def root():
     # return {"message": "Hello World"}
-    return {"test", f"mysql+pymysql://{DB_USER}:{DB_PWD}@/{DB_SCHEMA}?unix_socket=/cloudsql/ceri-m1-ecommerce-2022:europe-west1:mysql-primary"}
+    return {
+        "test",
+        f"mysql+pymysql://{DB_USER}:{DB_PWD}@/{DB_SCHEMA}?unix_socket=/cloudsql/ceri-m1-ecommerce-2022:europe-west1:mysql-primary",
+    }
 
 
 @app.get("/artists", summary="Returns all artists")
