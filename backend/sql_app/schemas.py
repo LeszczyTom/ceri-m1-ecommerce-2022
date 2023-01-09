@@ -15,6 +15,7 @@ class Album(BaseModel):
     id: int
     name: str
     year: int
+    artists_id: int
     price: float
     cover: str
     stock: int
@@ -91,3 +92,14 @@ class Orders_items(BaseModel):
 class Update_stock(BaseModel):
     album_id: int
     stock: int
+    
+class Album_to_add(BaseModel):
+    name: str
+    artist_id: int
+    year: int
+    price: float
+    cover: str
+    stock: int
+
+    class Config:
+        orm_mode = True

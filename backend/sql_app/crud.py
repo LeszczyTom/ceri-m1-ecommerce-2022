@@ -281,3 +281,37 @@ def update_stock(db: Session, album_id: int, stock: int):
     album.stock = stock
     db.commit()
     return {"message": "Stock updated"}
+
+def delete_album(db: Session, album_id: int):
+    """
+    Delete an album from db
+    """
+    album = db.query(models.Album).filter(models.Album.id == album_id).first()
+    if album is None:
+        return {"message": "Album not found"}
+    db.delete(album)
+    
+    db.commit()
+    
+    album = db.query(models.Album).filter(models.Album.id == album_id).first()
+    
+    if album is None:
+        return {"message": "Album deleted"}
+
+    return {"message": "Something wrong happened"}
+
+def add_album(db: Session, album):
+    
+    exists = db.query(models.Album).filter_by(name=album.name).first()
+    
+    
+    print("exists", exists)
+    if exists:
+        return {"message": "Album already in db"}
+    
+    album_to_add = models.Album(name = "album 1",artists_id = 1,year = 2018,price = 40,cover = "www.test.com/img.png",stock = 40)
+    
+    # db.add(album_to_add)
+    # db.commit()
+    
+    return {"message": "Album added"}
