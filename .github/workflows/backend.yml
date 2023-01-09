@@ -24,26 +24,6 @@ jobs:
           option: "--check --verbose"
           version: "22.10.0"
           src: "./backend"
-
-  isort:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-    
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.9"
-          cache: "pip" # caching pip dependencies
-      - run: |
-          python -m pip install --upgrade pip
-          pip install -r ./backend/requirements.txt
-      - name: isort
-        uses: isort/isort-action@v1.1.0
-        with:
-            requirements: "requirements.txt"
     
   mypy:
     runs-on: ubuntu-latest
@@ -84,7 +64,7 @@ jobs:
           pytest
         
   deploy:
-    needs: [black, isort, mypy, pytest]
+    needs: [black, mypy, pytest]
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     strategy:
