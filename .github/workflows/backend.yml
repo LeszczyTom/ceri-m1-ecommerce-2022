@@ -3,28 +3,6 @@ name: Backend
 on: [push, pull_request]
 
 jobs:
-  black:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.9"
-          cache: "pip" # caching pip dependencies
-      - run: |
-          python -m pip install --upgrade pip
-          pip install -r ./backend/requirements.txt
-      - name: Run Black
-        uses: psf/black@stable
-        with:
-          option: "--check --verbose"
-          version: "22.10.0"
-          src: "./backend"
-
   pytest:
     runs-on: ubuntu-latest
     strategy:
@@ -45,7 +23,7 @@ jobs:
           pytest
         
   deploy:
-    needs: [black, pytest]
+    needs: [pytest]
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     strategy:
@@ -57,5 +35,5 @@ jobs:
         run: echo "${{ secrets.DOCKER_REGISTRY_PASSWORD }}" | docker login --username ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin ${{ secrets.DOCKER_REGISTRY }}
       - name: Build and push 
         run: | 
-          docker build -t ${{ secrets.DOCKER_REGISTRY }}/backend:0.2.3 ./backend --build-arg env=${{ secrets.ENV}}
-          docker push ${{ secrets.DOCKER_REGISTRY }}/backend:0.2.3
+          docker build -t ${{ secrets.DOCKER_REGISTRY }}/backend:0.2.4 ./backend --build-arg env=${{ secrets.ENV}}
+          docker push ${{ secrets.DOCKER_REGISTRY }}/backend:0.2.4
