@@ -29,16 +29,6 @@ provider "google" {
   region  = "europe-west1"
 }
 
-data "google_secret_manager_secret_version" "mysql-address" {
-  provider = google
-  secret   = mysql-address
-}
-
-variable "MYSQL_ADDRESS" {
-  default = data.google_secret_manager_secret_version.mysql-address.payload
-}
-
-
 resource "google_cloud_run_service_iam_member" "invokers_back" {
   location = google_cloud_run_service.pinkzebra_backend.location
   service  = google_cloud_run_service.pinkzebra_backend.name
@@ -97,6 +87,13 @@ resource "google_cloud_run_service" "pinkzebra_backend" {
             }
           }
         }
+      }
+    }
+    metadata {
+      annotations = {
+        "autoscaling.knative.dev/maxScale"      = "1"
+        "run.googleapis.com/cloudsql-instances" = "ceri-m1-ecommerce-2022:europe-west1:mysql-primary"
+        "seed"                                  = "9"
       }
     }
   }
