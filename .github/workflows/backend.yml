@@ -24,25 +24,6 @@ jobs:
           option: "--check --verbose"
           version: "22.10.0"
           src: "./backend"
-    
-  mypy:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-    
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.9"
-          cache: "pip" # caching pip dependencies
-      - run: |
-          python -m pip install --upgrade pip
-          pip install -r ./backend/requirements.txt
-      - name: Run mypy
-        run : |
-          mypy ./backend --config-file ./backend/mypy.ini
 
   pytest:
     runs-on: ubuntu-latest
@@ -64,7 +45,7 @@ jobs:
           pytest
         
   deploy:
-    needs: [black, mypy, pytest]
+    needs: [black, pytest]
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     strategy:

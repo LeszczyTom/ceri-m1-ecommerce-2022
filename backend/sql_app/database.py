@@ -16,7 +16,7 @@ DB_SCHEMA = os.environ.get("DB_SCHEMA")
 
 
 print("mysql://{}:{}@{}:{}/{}".format(DB_USER, DB_PWD, DB_HOSTNAME, DB_PORT, DB_SCHEMA))
-connection_name = 'ceri-m1-ecommerce-2022:europe-west1:mysql-primary'
+connection_name = "ceri-m1-ecommerce-2022:europe-west1:mysql-primary"
 
 engine = create_engine(
     drivername="mysql+pymysql",
