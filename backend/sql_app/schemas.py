@@ -70,6 +70,7 @@ class Cart_item(BaseModel):
 class Price(BaseModel):
     price: int
 
+
 class Orders(BaseModel):
     id: int
     date: str
@@ -79,23 +80,27 @@ class Orders(BaseModel):
     class Config:
         orm_mode = True
 
+
 class Orders_items(BaseModel):
     id: int
     quantity: int
 
     albums_id: int
     orders_id: int
+    user_id: int
 
     class Config:
         orm_mode = True
 
+
 class Update_stock(BaseModel):
     album_id: int
     stock: int
-    
+
+
 class Album_to_add(BaseModel):
     name: str
-    artist_id: int
+    artist: str
     year: int
     price: float
     cover: str
@@ -103,3 +108,8 @@ class Album_to_add(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class Order_update(BaseModel):
+    id: int
+    state: str

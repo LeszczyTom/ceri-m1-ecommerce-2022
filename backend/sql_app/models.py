@@ -67,11 +67,12 @@ class Orders_items(Base):
     albums_id = Column(Integer, ForeignKey("albums.id"))
     orders_id = Column(Integer, ForeignKey("orders.id"))
 
+
 class Orders(Base):
     __tablename__ = "orders"
     id = Column(Integer, primary_key=True)
     order_date = Column(String)
     total_price = Column(Float)
     state = Column(String)
-    
+
     users_id = Column(Integer, ForeignKey("users.id"))

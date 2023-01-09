@@ -2,9 +2,9 @@ import sql_app.crud as crud
 import sql_app.models as models
 import sql_app.schemas as schemas
 from fastapi import Depends, FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 from sql_app.database import SessionLocal, engine
 from sqlalchemy.orm import Session
-from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
@@ -152,19 +152,33 @@ def register(login_credential: schemas.LoginCredential, db: Session = Depends(ge
 @app.get("/orders", summary="Returns all orders")
 def read_orders(db: Session = Depends(get_db)):
     return crud.get_orders(db, None)
-    
+
+
 @app.get("/orders/{user_id}", summary="Returns all orders of a user")
 def read_orders_by_user_id(user_id: int, db: Session = Depends(get_db)):
     return crud.get_orders(db, user_id)
+
 
 @app.post("/update_stock", summary="Updates the stock of an album")
 def update_stock(update_info: schemas.Update_stock, db: Session = Depends(get_db)):
     return crud.update_stock(db, update_info.album_id, update_info.stock)
 
+
 @app.delete("/delete_album/{album_id}", summary="Deletes an album")
 def delete_album(album_id: int, db: Session = Depends(get_db)):
     return crud.delete_album(db, album_id)
 
+
 @app.post("/add_album", summary="Adds an album")
 def add_album(album: schemas.Album_to_add, db: Session = Depends(get_db)):
     return crud.add_album(db, album)
+
+
+@app.post("/update_order", summary="Updates an order")
+def update_order(order: schemas.Order_update, db: Session = Depends(get_db)):
+    return crud.update_order(db, order)
+
+
+@app.delete("/delete_order/{order_id}", summary="Deletes an order")
+def delete_order(order_id: int, db: Session = Depends(get_db)):
+    return crud.delete_order(db, order_id)
