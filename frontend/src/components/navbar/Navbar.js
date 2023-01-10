@@ -5,11 +5,18 @@ import { Link } from "react-router-dom";
 import { CartContext } from '../../CartContext';
 import { useContext } from 'react';
 import Cookie from 'universal-cookie';
+import { useState } from 'react';
 
 const Navbar = (props) => {
 
   const cookies = new Cookie()
   const {cart} = useContext(CartContext)
+  const [search, setSearch] = useState('');
+
+  const handleSearch = (search) => {
+    
+  }
+
 
   return (
     <div className="navbar">
@@ -19,9 +26,10 @@ const Navbar = (props) => {
           <input type="text" 
             placeholder="Rechercher un album..." 
             id="search"
-            value={props.keyword}
-            onChange={(e) => props.setKeyword(e.target.value)}
             className="searchBar navlink"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKe
           />
             <IoSearchOutline className='search' size={25}/>
             <Link to={cookies.get('role')==="admin" ? "/backoffice" : "/user-form"}>
