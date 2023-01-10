@@ -48,17 +48,16 @@ function Admin(props) {
         })
     }
 
-    
     const handleDeleteOrder = (id) => {
         fetch(process.env.REACT_APP_SERVER_URL + '/delete_order/'+id, {
-            method: 'DELETE',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-        }).then(response => response.json())
+        })
+        .then(response => response.json())
         .then(data => {
             console.log(data)
-            //window.location.reload();
         })
     }
 

@@ -13,5 +13,5 @@ jobs:
         run: echo "${{ secrets.DOCKER_REGISTRY_PASSWORD }}" | docker login --username ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin ${{ secrets.DOCKER_REGISTRY }}
       - name: Build and push 
         run: | 
-          docker build -t ${{ secrets.DOCKER_REGISTRY }}/frontend:0.9.0 ./frontend
-          docker push ${{ secrets.DOCKER_REGISTRY }}/frontend:0.9.0
+          docker build -t ${{ secrets.DOCKER_REGISTRY }}/frontend:0.9.1 ./frontend
+          docker push ${{ secrets.DOCKER_REGISTRY }}/frontend:0.9.1
