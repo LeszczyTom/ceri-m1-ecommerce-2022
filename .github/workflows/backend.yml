@@ -35,5 +35,5 @@ jobs:
         run: echo "${{ secrets.DOCKER_REGISTRY_PASSWORD }}" | docker login --username ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin ${{ secrets.DOCKER_REGISTRY }}
       - name: Build and push 
         run: | 
-          docker build -t ${{ secrets.DOCKER_REGISTRY }}/backend:1.0.4 ./backend --build-arg env=${{ secrets.ENV}}
-          docker push ${{ secrets.DOCKER_REGISTRY }}/backend:1.0.4
+          docker build -t ${{ secrets.DOCKER_REGISTRY }}/backend:1.0.5 ./backend --build-arg env=${{ secrets.ENV}}
+          docker push ${{ secrets.DOCKER_REGISTRY }}/backend:1.0.5

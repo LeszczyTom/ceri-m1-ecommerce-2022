@@ -33,11 +33,12 @@ function UserForm() {
             })
         }).then(response => response.json())
         .then(data => {
-            console.log(data);
+            console.log("login=", data);
             if(data) {
                 setuserLogged("true");
                 sessionStorage.setItem('userStatus', "true");
-                cookies.set('role', data, { path: '/' });
+                cookies.set('role', JSON.stringify(data), { path: '/' });
+                data === 'admin' ? cookies.set('role', data, { path: '/' }) : cookies.set('role', 2, { path: '/' });
                 data === 'admin' ? window.location.href = '/backoffice' : window.location.href = '/user-form';
             }
             else {

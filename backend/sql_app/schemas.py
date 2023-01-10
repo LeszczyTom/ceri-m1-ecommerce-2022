@@ -113,3 +113,10 @@ class Album_to_add(BaseModel):
 class Order_update(BaseModel):
     id: int
     state: str
+
+
+class Search_txt(BaseModel):
+    txt: str
+
+    class Config:
+        orm_mode = True

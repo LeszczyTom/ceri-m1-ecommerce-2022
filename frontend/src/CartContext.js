@@ -38,59 +38,61 @@ export const CartProvider = ({ children }) => {
             body: JSON.stringify({
                 quantity: 1,
                 user_id: userId,
-                albums_id: item.id
+                albums_id: item.Album.id
             })
         }).then(response => response.json())
         .then(data => {
-            console.log({
-                quantity: 1,
-                user_id: userId,
-                albums_id: item.id
-            });
+            console.log("add album to cart = ", data)
+            window.location.reload();
         })
     };
     
-    const removeFromCart = (item) => {
-        if (item.quantity === 1) {
-            setCart(cart.filter((cartItem) => cartItem.id !== item.id));
-        } else {
-            setCart(
-                cart.map((cartItem) => {
-                    if (cartItem.id === item.id) {
-                        return {
-                            ...cartItem,
-                            quantity: cartItem.quantity - 1,
-                        };
-                    } else {
-                        return cartItem;
-                    }
-                })
-            );
-        }
+    const removeFromCart = (item, quantity) => {
+        fetch(process.env.REACT_APP_SERVER_URL + '/rem_album_cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                quantity: quantity,
+                user_id: userId,
+                albums_id: item.Album.id
+            })
+        }).then(response => response.json())
+        .then(data => {
+            console.log("remove album from cart = ", data)
+            window.location.reload();
+        })
     };
 
-    const clearItem = (item) => {
-        setCart(cart.filter((cartItem) => cartItem.id !== item.id));
+    const clearItem = (item, quantity) => {
+            removeFromCart(item, quantity);
     };
     
     const clearCart = () => {
+        for (let i = 0; i < cart.length; i++) {
+            removeFromCart(cart[i], cart[i].quantity);
+        }
         setCart([]);
     };
     
     useEffect(() => {
         const total = cart.reduce((acc, item) => acc + parseFloat(item.quantity * item.price), 0);
         setTotal(total.toFixed(2));
-        fetch(process.env.REACT_APP_SERVER_URL + '/cart/'+ userId, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(response => response.json())
-        .then(data => {
-            console.log(data)
-        })
-
-    }, [cart]);
+        if (userId) {
+            fetch(process.env.REACT_APP_SERVER_URL + '/cart/'+ userId, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => response.json())
+            .then(data => {
+                console.log("cart = ", data)
+                console.log("userId = ", userId)
+                setCart(data);
+            })
+        }
+    }, []);
     
     const value = {
         cart,

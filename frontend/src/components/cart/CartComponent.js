@@ -1,8 +1,10 @@
 import './cart.css';
 import { useContext } from 'react';
 import { CartContext } from '../../CartContext';
+import { useEffect, useState } from 'react';
 
 function Cart() {
+    const [allAlbums, setAllAlbums] = useState([]);
     const { cart, total, addToCart, clearItem, removeFromCart, clearCart } = useContext(CartContext);
     const handleLogin = () => {
         if(sessionStorage.getItem('userStatus') === 'false') {
@@ -12,7 +14,16 @@ function Cart() {
         }
     }
 
-    if (cart.length === 0) {
+    useEffect(() => {
+        fetch(process.env.REACT_APP_SERVER_URL + '/albums')
+        .then(response => response.json())
+        .then(data => {
+            setAllAlbums(data);
+        })
+    }, []);
+
+
+    if (cart.length === 0 || allAlbums.length === 0) {
         return (
             <div className="cart">
                 <h1>Votre panier est vide</h1>
@@ -23,15 +34,14 @@ function Cart() {
         <div className="shopping-cart">
             {cart.map((item) => (
                 <div className="item">
-                    <button className="del-btn" onClick={() => clearItem(item)}>&times;</button>
+                    <button className="del-btn" onClick={() => clearItem(item, item.quantity)}>&times;</button>
 
                     <div className="image">
-                        <img src={item.cover} alt="cover"/>
+                        <img src={allAlbums.find(album => album.id === item.Album.id).cover} alt="cover"/>
                     </div>
 
                     <div className="description">
-                        <span>{item.title}</span>
-                        <span>{item.album}</span>
+                        <span>{allAlbums.find(album => album.id === item.Album.id).name}</span>
                     </div>
 
                     <div className="quantity">
@@ -39,12 +49,12 @@ function Cart() {
                         +
                     </button>
                     <input type="number" name="name" value={item.quantity}/>
-                    <button className="minus-btn" type="button" name="button" onClick={() => removeFromCart(item)}>
+                    <button className="minus-btn" type="button" name="button" onClick={() => removeFromCart(item, 1)}>
                         -
                     </button>
                     </div>
 
-                    <div className="total-price">{(item.quantity * item.price).toFixed(2)}€</div>
+                    <div className="total-price">{(item.quantity * allAlbums.find(album => album.id === item.Album.id).price).toFixed(2)}€</div>
                 </div>
             ))}
             <div>

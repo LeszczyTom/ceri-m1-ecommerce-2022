@@ -157,10 +157,7 @@ def get_user_cart(db: Session, user_id):
     """
     Return user cart
     """
-    
-    albums_in_cart = db.query(models.Album, models.Cart.quantity).join(models.Cart, models.Album.id == models.Cart.albums_id).all()
-    
-    
+    albums_in_cart = db.query(models.Album, models.Cart.quantity).join(models.Cart, models.Album.id == models.Cart.albums_id).filter(models.Cart.users_id == user_id).all()
     
     return albums_in_cart
     
