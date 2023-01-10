@@ -37,10 +37,8 @@ function UserForm() {
             if(data) {
                 setuserLogged("true");
                 sessionStorage.setItem('userStatus', "true");
-                cookies.set('role', 'user', { path: '/' });
-                if(data === 'admin') {
-                    cookies.set('role', 'admin', { path: '/' });
-                }
+                cookies.set('role', data, { path: '/' });
+                data === 'admin' ? window.location.href = '/backoffice' : window.location.href = '/user-form';
             }
             else {
                 alert("Email ou mot de passe incorrect");
@@ -65,7 +63,7 @@ function UserForm() {
             if(data) {
                 setuserLogged("true");
                 sessionStorage.setItem('userStatus', "true");
-                cookies.set('role', 'user', { path: '/' });
+                cookies.set('role', data, { path: '/' });
             }
             else {
                 alert("Identifiants incorrects ou déjà utilisés");
@@ -78,6 +76,7 @@ function UserForm() {
         setuserLogged("false");
         sessionStorage.setItem('userStatus', "false");
         cookies.remove('role', { path: '/' });
+        window.location.reload();
     }
 
 

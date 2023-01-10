@@ -1,10 +1,10 @@
 import { Navigate, Outlet } from 'react-router-dom'
-import Cookie from 'universal-cookie'
+import Cookies from 'universal-cookie'
 
 
 const PrivateRoutes = () => {
 
-    const cookies = new Cookie()
+    const cookies = new Cookies()
     return (
         cookies.get('role') === 'admin' ? <Outlet/> : <Navigate to='/'/>
     )

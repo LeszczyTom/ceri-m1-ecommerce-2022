@@ -4,7 +4,6 @@ import { CartContext } from '../../CartContext';
 
 function Cart() {
     const { cart, total, addToCart, clearItem, removeFromCart, clearCart } = useContext(CartContext);
-
     const handleLogin = () => {
         if(sessionStorage.getItem('userStatus') === 'false') {
             alert("Vous devez être connecté pour passer au paiement");

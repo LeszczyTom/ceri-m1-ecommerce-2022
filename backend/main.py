@@ -7,10 +7,14 @@ import sql_app.models as models
 import sql_app.schemas as schemas
 from sql_app.database import SessionLocal, engine
 
+from algoliasearch.search_client import SearchClient
+client = SearchClient.create("3STRLEGLVZ", "651ad3c41669fe50406748555ef5febd")
+
+
 app = FastAPI()
 
 origins = [
-    "*",
+    "https://pinkzebra-backend-mwjszocsqa-ew.a.run.app",
 ]
 
 app.add_middleware(
@@ -110,7 +114,8 @@ def read_song_info_by_id(song_id: int, db: Session = Depends(get_db)):
 
 @app.post("/login", summary="Returns true if credentials are correct")
 def login(login_credential: schemas.LoginCredential, db: Session = Depends(get_db)):
-    return crud.check_credentials(db, login_credential.email, login_credential.pwd)
+    cred =  crud.check_credentials(db, login_credential.email, login_credential.pwd)
+    return cred
 
 
 @app.post("/add_album_cart", summary="Adds an album to the cart")
@@ -184,3 +189,11 @@ def update_order(order: schemas.Order_update, db: Session = Depends(get_db)):
 @app.delete("/delete_order/{order_id}", summary="Deletes an order")
 def delete_order(order_id: int, db: Session = Depends(get_db)):
     return crud.delete_order(db, order_id)
+
+
+@app.post("/search", summary="Search engine using Algolia")
+def search(body: schemas.Search_txt, db: Session = Depends(get_db)):
+    txt = body.txt
+    index = client.init_index("catalogue_albums")
+    results = index.search(txt)["hits"]
+    return results

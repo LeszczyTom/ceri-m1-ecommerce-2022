@@ -2,6 +2,7 @@ import './admin.css';
 import { useState, useEffect } from 'react';
 import AdminVinylCard from './AdminVinylCard';
 import { IoTrashBinOutline, IoCheckmarkOutline } from "react-icons/io5";
+import Cookies from 'universal-cookie'
 
 
 function Admin(props) {
@@ -20,6 +21,8 @@ function Admin(props) {
         cover: '',
         stock: '',
     });
+
+    const cookies = new Cookies();
 
     const handleChange = (e) => {
         setNewProduct({
@@ -66,6 +69,13 @@ function Admin(props) {
         //fetch delete
     }
 
+    const handleSignout = (e) => {
+        e.preventDefault();
+        sessionStorage.setItem('userStatus', "false");
+        cookies.remove('role', { path: '/' });
+        window.location.reload();
+    }
+
     useEffect(() => {
     if(props.records){
         setAllRecords(props.records);
@@ -83,6 +93,9 @@ function Admin(props) {
 
     return (
     <div className="admin">
+            <div className='logoutContainer'>
+                <button type="submit" className="submitButton" onClick={handleSignout}>Déconnexion</button>
+            </div>
             <div className='page-title'>
                 Suivi des commandes
             </div>
