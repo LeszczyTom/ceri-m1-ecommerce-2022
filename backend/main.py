@@ -187,7 +187,7 @@ def update_order(order: schemas.Order_update, db: Session = Depends(get_db)):
     return crud.update_order(db, order)
 
 
-@app.delete("/delete_order/{order_id}", summary="Deletes an order")
+@app.post("/delete_order/{order_id}", summary="Deletes an order")
 def delete_order(order_id: int, db: Session = Depends(get_db)):
     return crud.delete_order(db, order_id)
 
