@@ -2,15 +2,27 @@ import './cart.css';
 import { useContext } from 'react';
 import { CartContext } from '../../CartContext';
 import { useEffect, useState } from 'react';
+import Cookies from 'universal-cookie';
 
 function Cart() {
     const [allAlbums, setAllAlbums] = useState([]);
     const { cart, total, addToCart, clearItem, removeFromCart, clearCart } = useContext(CartContext);
-    const handleLogin = () => {
-        if(sessionStorage.getItem('userStatus') === 'false') {
-            alert("Vous devez être connecté pour passer au paiement");
-        } else {
-            console.log(cart);
+    const cookies = new Cookies();
+    const userId = cookies.get('role');
+
+    const handleBuy = () => {
+        if(userId) {
+            fetch(process.env.REACT_APP_SERVER_URL + '/pay_cart/'+userId, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }).then(response => response.json())
+            .then(data => {
+                console.log("buy = ", data)
+                alert("Votre commande a bien été prise en compte, retrouvez votre commande dans votre espace client");
+                window.location.reload();
+            })
         }
     }
 
@@ -25,8 +37,9 @@ function Cart() {
 
     if (cart.length === 0 || allAlbums.length === 0) {
         return (
+            
             <div className="cart">
-                <h1>Votre panier est vide</h1>
+                <p>Votre panier est vide</p>
             </div>
         );
     }
@@ -53,16 +66,14 @@ function Cart() {
                         -
                     </button>
                     </div>
-
                     <div className="total-price">{(item.quantity * allAlbums.find(album => album.id === item.Album.id).price).toFixed(2)}€</div>
                 </div>
             ))}
             <div>
                 <div className="total" style={{padding: "50px"}}>
-                    <p>Total</p>
-                    <p>{total}€</p>
-                    <a className="clear-cart-btn" onClick={handleLogin}>Acheter</a>
+                    <p>Total : {total}€</p>
                     <a className="clear-cart-btn" onClick={clearCart}>Vider le panier</a>
+                    <a className="buy-cart-btn" onClick={handleBuy}>Acheter</a>
                 </div>
             </div>
         </div>

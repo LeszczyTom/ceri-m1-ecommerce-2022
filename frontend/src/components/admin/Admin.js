@@ -33,7 +33,6 @@ function Admin(props) {
 
 
     const handleUpdateOrder = (id, newStatus) => {
-        //fetch update
         fetch(process.env.REACT_APP_SERVER_URL + '/update_order', {
             method: 'POST',
             headers: {
@@ -49,8 +48,23 @@ function Admin(props) {
         })
     }
 
+    
+    const handleDeleteOrder = (id) => {
+        fetch(process.env.REACT_APP_SERVER_URL + '/delete_order/'+id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+                
+            },
+        }).then(response => response.json())
+        .then(data => {
+            console.log(data)
+            //window.location.reload();
+        })
+
+    }
+
     const handleAddAlbum = () => {
-        //fetch add
         fetch(process.env.REACT_APP_SERVER_URL + '/add_album', {
             method: 'POST',
             headers: {
@@ -62,11 +76,6 @@ function Admin(props) {
             console.log(data)
             window.location.reload();
         })
-    }
-
-
-    const handleDelete = (id) => {
-        //fetch delete
     }
 
     const handleSignout = (e) => {
@@ -113,16 +122,6 @@ function Admin(props) {
                         <div>
                             Total : {order.total} €
                         </div>
-                        {/*
-                        <div>
-                            {order.items.map((item) => {
-                                return (
-                                    <div>
-                                        {item.quantity} x {item.name}
-                                    </div>
-                                )
-                            })}
-                        </div>*/}
                         <div>
                             <select className='orderStatus' onChange={(e) => {setNewStatus(e.target.value)}}>
                                 <option value="pending" selected={order.status === 'pending'}>En attente</option>
@@ -131,7 +130,7 @@ function Admin(props) {
                             </select>
                         </div>
                         <div className='delBtn' onClick={()=>{handleUpdateOrder(order.orderNumber, newStatus)}}> <IoCheckmarkOutline size={25}/> </div>
-                        <div className='delBtn' onClick={()=>{handleDelete(props.record.id)}}> <IoTrashBinOutline size={25}/> </div>
+                        <div className='delBtn' onClick={()=>{handleDeleteOrder(order.orderNumber)}}> <IoTrashBinOutline size={25}/> </div>
                     </div>)
                     }) : <div className='noOrders'>Aucune commande en cours</div>
                     }

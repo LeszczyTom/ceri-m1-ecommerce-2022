@@ -44,8 +44,8 @@ export default function ItemDetails() {
  
     const {cart, addToCart} = useContext(CartContext)
 
-    const handleCart = () => {
-        addToCart(thisAlbum)
+    const handleCart = (albumId) => {
+        addToCart(albumId)
     }
 
     return (
@@ -65,7 +65,7 @@ export default function ItemDetails() {
                     <div className="priceSong">
                         <p>{thisAlbum.price}€</p>
                     </div>
-                    <p className="addToCartBtn" onClick={handleCart}>Ajouter au panier</p>
+                    <p className="addToCartBtn" onClick={()=>{handleCart(thisAlbum.id)}}>Ajouter au panier</p>
                 </div>
             </div>
         </div>

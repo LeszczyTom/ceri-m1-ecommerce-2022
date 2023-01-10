@@ -11,7 +11,6 @@ export default function AdminVinylCard(props) {
     const [stock, setStock] = useState(props.record.stock);
 
     const handleUpdate = (id, newstock) => {
-        //fetch delete
         fetch(process.env.REACT_APP_SERVER_URL + '/update_stock', {
             method: 'POST',
             headers: {
@@ -31,7 +30,6 @@ export default function AdminVinylCard(props) {
     }
 
     const handleDelete = (id) => {
-        //fetch delete
         fetch(process.env.REACT_APP_SERVER_URL + '/delete_album/'+id, {
             method: 'DELETE',
             headers: {

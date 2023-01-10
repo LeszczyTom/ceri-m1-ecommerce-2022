@@ -71,15 +71,13 @@ export const CartProvider = ({ children }) => {
     
     const clearCart = () => {
         for (let i = 0; i < cart.length; i++) {
-            removeFromCart(cart[i].id, cart[i].quantity);
+            clearItem(cart[i], cart[i].quantity);
         }
         setCart([]);
     };
     
     useEffect(() => {
-        const total = cart.reduce((acc, item) => acc + parseFloat(item.quantity * item.price), 0);
-        setTotal(total.toFixed(2));
-        if (userId) {
+        if (userId && userId  !== 'admin') {
             fetch(process.env.REACT_APP_SERVER_URL + '/cart/'+ userId, {
                 method: 'GET',
                 headers: {
@@ -90,6 +88,10 @@ export const CartProvider = ({ children }) => {
                 console.log("cart = ", data)
                 console.log("userId = ", userId)
                 setCart(data);
+                for (let i = 0; i < data.length; i++) {
+                    setTotal(total + (data[i].quantity * data[i].Album.price));
+                }
+                
             })
         }
     }, []);

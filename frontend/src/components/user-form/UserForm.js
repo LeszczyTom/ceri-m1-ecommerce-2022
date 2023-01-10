@@ -12,12 +12,30 @@ function UserForm() {
 
     const [emailReg, setEmailReg] = useState('');
     const [passwordReg, setPasswordReg] = useState('');
+
+
+    const [ordersUser, setOrdersUser] = useState([]);
+    const [userId, serUserId] = useState('');
+
     const cookies = new Cookies();
 
     useEffect( () => {
         if(sessionStorage.getItem('userStatus') === null) {
             sessionStorage.setItem('userStatus', "false");
         }
+
+        if(cookies.get('role') && cookies.get('role') !== 'admin') {
+            fetch(process.env.REACT_APP_SERVER_URL + '/orders' + userId, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => response.json())
+            .then(data => {
+                setOrdersUser(data)
+            })
+        }
+
     },[]);
 
     const handleLogin = (e) => {
@@ -38,7 +56,7 @@ function UserForm() {
                 setuserLogged("true");
                 sessionStorage.setItem('userStatus', "true");
                 cookies.set('role', JSON.stringify(data), { path: '/' });
-                data === 'admin' ? cookies.set('role', data, { path: '/' }) : cookies.set('role', 2, { path: '/' });
+                cookies.set('role', data, { path: '/' });
                 data === 'admin' ? window.location.href = '/backoffice' : window.location.href = '/user-form';
             }
             else {
@@ -163,20 +181,35 @@ function UserForm() {
         return (
             <div className="profile-container">
                 <div className='login-form form-style'>
+
                     <h1>Bienvenue sur PinkZebra</h1>
-                    {/*<form>
-                        <div className="form-group">
-                            <label for="exampleInputEmail2">E-mail</label>
-                            <br/>
-                            <input type="email" className="form-control" id="exampleInputEmail2" aria-describedby="emailHelp" placeholder="E-mail" value='test' disabled/>
+                    
+                    <div className='page-title'>
+                        Suivi des commandes
+                    </div>
+                    
+                    <div className="ordersListContainer">
+                        <div className='ordersList'>
+                            {
+                            ordersUser.length > 0 ? ordersUser.map((order) => {
+                                return (<div className='orderItem'>
+                                <div>
+                                    Commande n°{order.orderNumber}
+                                </div>
+                                <div>
+                                    Total : {order.total} €
+                                </div>
+                                <div>
+                                    Statut : {order.status}
+                                </div>
+                            </div>)
+                            }) : <div className='noOrders'>Aucune commande en cours</div>
+                            }
                         </div>
-                        <div className="form-group">
-                            <label for="exampleInputPassword2">Mot de passe</label>
-                            <br/>
-                            <input type="password" className="form-control" id="exampleInputPassword2" placeholder="Mot de passe" value='test' disabled/>
-                        </div>
-                    </form>*/}
+                    </div>     
+                    
                     <button type="submit" className="submitButton" onClick={()=>{window.location.href="/"}}>Boutique</button>
+                    <button type="submit" className="submitButton" onClick={()=>{window.location.href="/cart"}}>Panier</button>
                     <button type="submit" className="submitButton" onClick={handleSignout}>Déconnexion</button>
                 </div>
             </div>
