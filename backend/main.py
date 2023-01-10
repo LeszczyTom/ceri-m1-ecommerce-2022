@@ -14,7 +14,7 @@ client = SearchClient.create("3STRLEGLVZ", "651ad3c41669fe50406748555ef5febd")
 app = FastAPI()
 
 origins = [
-    "https://pinkzebra-backend-mwjszocsqa-ew.a.run.app",
+    "https://pinkzebra-frontend-mwjszocsqa-ew.a.run.app",
     "http://localhost:3000"
 ]
 
@@ -22,7 +22,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["PUT, DELETE, GET, POST"],
     allow_headers=["*"],
 )
 
