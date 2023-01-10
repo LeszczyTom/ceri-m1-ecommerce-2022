@@ -10,13 +10,41 @@ export default function AdminVinylCard(props) {
     const { addToCart } = useContext(CartContext);
     const [stock, setStock] = useState(props.record.stock);
 
-    const handleDelete = (id) => {
-        console.log("Album " + id + " supprimé")
+    const handleUpdate = (id, newstock) => {
+        //fetch delete
+        fetch(process.env.REACT_APP_SERVER_URL + '/update_stock', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                
+            },
+            body: JSON.stringify({
+                album_id: id,
+                stock: newstock
+            })
+
+        }).then(response => response.json())
+        .then(data => {
+            console.log(data)
+            window.location.reload();
+        })
     }
 
-    const handleUpdate = (id, stock) => {
-        console.log("Album " + id + " a maintenant " + stock + " unités")
+    const handleDelete = (id) => {
+        //fetch delete
+        fetch(process.env.REACT_APP_SERVER_URL + '/delete_album/'+id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+                
+            },
+        }).then(response => response.json())
+        .then(data => {
+            console.log(data)
+            window.location.reload();
+        })
     }
+
 
     return(
         <div className='vinylItem'>
@@ -28,12 +56,12 @@ export default function AdminVinylCard(props) {
                 <div className='itemDescription'>
                     <div className='headerItem'>
                         <div><h3 className='productName'>{props.record.name} - {props.record.year}</h3></div>
-                        <div className='delBtn' onClick={()=>{handleDelete(props.record.id)}} > <IoTrashBinOutline size={25}/> </div>
+                        <div className='delBtn' onClick={()=>{handleDelete(props.record.id)}}> <IoTrashBinOutline size={25}/> </div>
                     </div>
                     <div><p className='productName'>{props.record.album}</p></div>
                     <div className='itemStock'>
                         <div className='productStock'> <input type="number" value={stock} onChange={(e)=>{setStock(e.target.value)}}></input> unités </div>
-                        <div className='cartBtn' onClick={()=>{handleUpdate(props.record.id, 0)}} >Mettre à jour</div>
+                        <div className='cartBtn' onClick={()=>{handleUpdate(props.record.id, stock)}} >Mettre à jour</div>
                     </div>
                 </div>
             </div>

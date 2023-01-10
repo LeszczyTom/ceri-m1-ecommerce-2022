@@ -10,7 +10,7 @@ function ProductsList(props) {
   const [filtersArtists, setFiltersArtists] = useState([]);
   const [filtersAlbums, setFiltersAlbums] = useState([]);
   const [filtersMinYear, setFiltersMinYear] = useState(1948);
-  const [filtersMaxYear, setFiltersMaxYear] = useState(2022);
+  const [filtersMaxYear, setFiltersMaxYear] = useState(2023);
   const [filtersMinPrice, setFiltersMinPrice] = useState(0);
   const [filtersMaxPrice, setFiltersMaxPrice] = useState(100);
   const [uniqueAlbums, setUniqueAlbums] = useState([]);
@@ -63,16 +63,16 @@ function ProductsList(props) {
   }
 
   const handleMinYearChange = (e) => {
-    if(e.target.value >= 1948 && e.target.value <= 2022){
+    if(e.target.value >= 1948 && e.target.value <= 2023){
       setFiltersMinYear(e.target.value);
     }
     else if (e.target.value < 1948){
       setFiltersMinYear(1948);
       e.target.value = 1948;
     }
-    else if (e.target.value > 2022){
-      setFiltersMinYear(2022);
-      e.target.value = 2022;
+    else if (e.target.value > 2023){
+      setFiltersMinYear(2023);
+      e.target.value = 2023;
     }
     if(e.target.value > filtersMaxYear) {
       setFiltersMinYear(filtersMaxYear);
@@ -81,12 +81,12 @@ function ProductsList(props) {
   }
 
   const handleMaxYearChange = (e) => {
-    if(e.target.value >= 1948 && e.target.value <= 2022){
+    if(e.target.value >= 1948 && e.target.value <= 2023){
       setFiltersMaxYear(e.target.value);
     }
-    else if (e.target.value > 2022 || e.target.value === ""){
-      setFiltersMaxYear(2022);
-      e.target.value = 2022;
+    else if (e.target.value > 2023 || e.target.value === ""){
+      setFiltersMaxYear(2023);
+      e.target.value = 2023;
     }
     else if (e.target.value < 1948){
       setFiltersMaxYear(1948);
@@ -237,7 +237,7 @@ function ProductsList(props) {
           <div className="filterOptions">
               <input className="inputAnnee" type="number" placeholder="1948" onKeyDown={handleMinYearKeyDown} onBlur={handleMinYearChange} />
             -
-              <input className="inputAnnee" type="number" placeholder="2022" onKeyDown={handleMaxYearKeyDown} onBlur={handleMaxYearChange} />
+              <input className="inputAnnee" type="number" placeholder="2023" onKeyDown={handleMaxYearKeyDown} onBlur={handleMaxYearChange} />
           </div>
         </div>
        
@@ -325,7 +325,7 @@ function ProductsList(props) {
           <div className="filterOptions">
               <input className="inputAnnee" type="number" placeholder="1948" onKeyDown={handleMinYearKeyDown} onBlur={handleMinYearChange} />
             -
-              <input className="inputAnnee" type="number" placeholder="2022" onKeyDown={handleMaxYearKeyDown} onBlur={handleMaxYearChange} />
+              <input className="inputAnnee" type="number" placeholder="2023" onKeyDown={handleMaxYearKeyDown} onBlur={handleMaxYearChange} />
           </div>
         </div>
        

@@ -9,7 +9,7 @@ function Cart() {
         if(sessionStorage.getItem('userStatus') === 'false') {
             alert("Vous devez être connecté pour passer au paiement");
         } else {
-            alert("Commande validée" + JSON.stringify(cart));
+            console.log(cart);
         }
     }
 

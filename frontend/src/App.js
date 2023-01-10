@@ -65,7 +65,7 @@ function App() {
             <Route path="/cart" element={<Cart/>}/>
             <Route path="/user-form" element={<UserForm/>}/>
             <Route element={<PrivateRoutes/>}>
-              <Route path="/admin" element={<Admin records={recordsList} />}/>
+              <Route path="/backoffice" element={<Admin records={recordsList} />}/>
             </Route>
           </Routes>
       </CartProvider>

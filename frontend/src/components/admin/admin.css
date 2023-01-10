@@ -1,3 +1,9 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .forms-container {
     margin-top: 200px;
     display: grid;
@@ -93,8 +99,9 @@
     background-color: white;
     /* Set the margin */
     margin: auto;
+    padding: 30px;
     border-bottom: 1px solid rgba(0,0,0,1);
-    margin-top: 50px;
+    transition: ease-in-out 0.3s;
 }
 
 .orderItem div {
@@ -103,6 +110,34 @@
     width: 100%;
 }
 
+.orderStatus {
+    background-color: transparent;
+    border: none;
+    padding: 0 1em 0 0;
+    margin: 0;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+    color: inherit;
+}
+
+.orderStatus:after {
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    padding: 0 1em 0 0;
+    margin: 0;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+    justify-self: end;
+}
+
 .add-form {
     margin-bottom: 150px;
 }
+

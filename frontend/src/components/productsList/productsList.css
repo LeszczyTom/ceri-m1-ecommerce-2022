@@ -1,11 +1,12 @@
 .productsList {
     padding: 5%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 35px;
     justify-items: center;
     overflow-y: scroll;
     align-items: center;
+    overflow-x: hidden;
 }
 
 .notFound {

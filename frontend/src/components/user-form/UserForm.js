@@ -163,19 +163,20 @@ function UserForm() {
         return (
             <div className="profile-container">
                 <div className='login-form form-style'>
-                    <h1>Vous êtes connectés</h1>
-                    <form>
+                    <h1>Bienvenue sur PinkZebra</h1>
+                    {/*<form>
                         <div className="form-group">
                             <label for="exampleInputEmail2">E-mail</label>
                             <br/>
-                            <input type="email" className="form-control" id="exampleInputEmail2" aria-describedby="emailHelp" placeholder="E-mail" disabled/>
+                            <input type="email" className="form-control" id="exampleInputEmail2" aria-describedby="emailHelp" placeholder="E-mail" value='test' disabled/>
                         </div>
                         <div className="form-group">
                             <label for="exampleInputPassword2">Mot de passe</label>
                             <br/>
-                            <input type="password" className="form-control" id="exampleInputPassword2" placeholder="Mot de passe" disabled/>
+                            <input type="password" className="form-control" id="exampleInputPassword2" placeholder="Mot de passe" value='test' disabled/>
                         </div>
-                    </form>
+                    </form>*/}
+                    <button type="submit" className="submitButton" onClick={()=>{window.location.href="/"}}>Boutique</button>
                     <button type="submit" className="submitButton" onClick={handleSignout}>Déconnexion</button>
                 </div>
             </div>
