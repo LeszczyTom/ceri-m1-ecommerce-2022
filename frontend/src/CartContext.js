@@ -9,7 +9,7 @@ export const CartProvider = ({ children }) => {
     const cookies = new Cookies();
     const userId = cookies.get("role");
 
-    const addToCart = (item) => {
+    const addToCart = (albumid) => {
         /*if (cart.find((cartItem) => cartItem.id === item.id && cartItem.quantity < item.stock)) {
             setCart(
                 cart.map((cartItem) => {
@@ -38,7 +38,7 @@ export const CartProvider = ({ children }) => {
             body: JSON.stringify({
                 quantity: 1,
                 user_id: userId,
-                albums_id: item.Album.id
+                albums_id: albumid
             })
         }).then(response => response.json())
         .then(data => {
@@ -47,7 +47,7 @@ export const CartProvider = ({ children }) => {
         })
     };
     
-    const removeFromCart = (item, quantity) => {
+    const removeFromCart = (albumid, quantity) => {
         fetch(process.env.REACT_APP_SERVER_URL + '/rem_album_cart', {
             method: 'POST',
             headers: {
@@ -56,7 +56,7 @@ export const CartProvider = ({ children }) => {
             body: JSON.stringify({
                 quantity: quantity,
                 user_id: userId,
-                albums_id: item.Album.id
+                albums_id: albumid
             })
         }).then(response => response.json())
         .then(data => {
@@ -66,12 +66,12 @@ export const CartProvider = ({ children }) => {
     };
 
     const clearItem = (item, quantity) => {
-            removeFromCart(item, quantity);
+            removeFromCart(item.Album.id, quantity);
     };
     
     const clearCart = () => {
         for (let i = 0; i < cart.length; i++) {
-            removeFromCart(cart[i], cart[i].quantity);
+            removeFromCart(cart[i].id, cart[i].quantity);
         }
         setCart([]);
     };

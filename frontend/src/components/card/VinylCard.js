@@ -9,7 +9,7 @@ export default function VinylCard(props) {
     const { addToCart } = useContext(CartContext);
     
     const handleCart = () => {
-        addToCart(props.record)
+        addToCart(props.record.id)
     }
 
     return(

@@ -45,11 +45,11 @@ function Cart() {
                     </div>
 
                     <div className="quantity">
-                    <button className="plus-btn" type="button" name="button" onClick={() => addToCart(item)}>
+                    <button className="plus-btn" type="button" name="button" onClick={() => addToCart(item.Album.id)}>
                         +
                     </button>
                     <input type="number" name="name" value={item.quantity}/>
-                    <button className="minus-btn" type="button" name="button" onClick={() => removeFromCart(item, 1)}>
+                    <button className="minus-btn" type="button" name="button" onClick={() => removeFromCart(item.Album.id, 1)}>
                         -
                     </button>
                     </div>
