@@ -14,7 +14,7 @@ client = SearchClient.create("3STRLEGLVZ", "651ad3c41669fe50406748555ef5febd")
 app = FastAPI()
 
 origins = [
-    "https://pinkzebra-backend-mwjszocsqa-ew.a.run.app",
+    "*",
 ]
 
 app.add_middleware(

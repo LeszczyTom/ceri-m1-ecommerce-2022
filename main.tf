@@ -51,7 +51,7 @@ resource "google_cloud_run_service" "pinkzebra_backend" {
     spec {
       service_account_name = "terraform-pinkzebra@ceri-m1-ecommerce-2022.iam.gserviceaccount.com"
       containers {
-        image = "europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/pinkzebra/backend:1.0.6"
+        image = "europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/pinkzebra/backend:1.0.7"
         env {
           name = "DB_USER"
           value_from {
@@ -108,7 +108,7 @@ resource "google_cloud_run_service" "pinkzebra_frontend" {
     spec {
       service_account_name = "terraform-pinkzebra@ceri-m1-ecommerce-2022.iam.gserviceaccount.com"
       containers {
-        image = "europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/pinkzebra/frontend:0.6.0"
+        image = "europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/pinkzebra/frontend:0.7.0"
       }
     }
   }
