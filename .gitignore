@@ -50,3 +50,4 @@ keyy.json
 backend/albums.txt
 backend/sql_app/hello_algolia.py
 backend/populate.py
+backend/.env
