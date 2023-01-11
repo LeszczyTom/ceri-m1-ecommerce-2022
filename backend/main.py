@@ -11,6 +11,10 @@ from algoliasearch.search_client import SearchClient
 client = SearchClient.create("3STRLEGLVZ", "651ad3c41669fe50406748555ef5febd")
 
 
+from algoliasearch.search_client import SearchClient
+client = SearchClient.create("3STRLEGLVZ", "651ad3c41669fe50406748555ef5febd")
+
+
 app = FastAPI()
 
 origins = [
