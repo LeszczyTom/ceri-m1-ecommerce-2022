@@ -13,9 +13,6 @@ client = SearchClient.create("3STRLEGLVZ", "a9c3ef1349d8b0c40c9a2b7381400edb")
 
 app = FastAPI()
 
-origins = [
-    "*",
-]
 
 # Dependency
 def get_db():
@@ -189,6 +186,10 @@ def search(body: schemas.Search_txt, db: Session = Depends(get_db)):
     index = client.init_index("catalogue_albums")
     results = index.search(txt)["hits"]
     return results
+
+origins = [
+    "*",
+]
 
 app.add_middleware(
     CORSMiddleware,

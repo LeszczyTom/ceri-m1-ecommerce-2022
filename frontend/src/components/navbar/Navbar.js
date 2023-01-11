@@ -27,9 +27,8 @@ const Navbar = (props) => {
             placeholder="Rechercher un album..." 
             id="search"
             className="searchBar navlink"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            onKe
+            value={props.keyword}
+            onChange={(e) => props.setKeyword(e.target.value)}
           />
             <IoSearchOutline className='search' size={25}/>
             <Link to={cookies.get('role')==="admin" ? "/backoffice" : "/user-form"}>

@@ -33,7 +33,7 @@ function App() {
      */
 
     const filtered = recordsList.filter(record => {
-     return record.title.toLowerCase().includes(input.toLowerCase())
+     return record.name.toLowerCase().includes(input.toLowerCase())
     })
     setInput(input);
     setRecordsList(filtered);
