@@ -62,6 +62,7 @@ function Admin(props) {
     }
 
     const handleAddAlbum = () => {
+        console.log("handleAddAlbum")
         fetch(process.env.REACT_APP_SERVER_URL + '/add_album', {
             method: 'POST',
             headers: {
@@ -70,8 +71,8 @@ function Admin(props) {
             body: JSON.stringify(newProduct)
         }).then(response => response.json())
         .then(data => {
-            console.log(data)
-            window.location.reload();
+            console.log(newProduct)
+            // window.location.reload();
         })
     }
 
@@ -100,7 +101,7 @@ function Admin(props) {
     return (
     <div className="admin">
             <div className='logoutContainer'>
-                <button type="submit" className="submitButton" onClick={handleSignout}>Déconnexion</button>
+                <button className="submitButton" onClick={handleSignout}>Déconnexion</button>
             </div>
             <div className='page-title'>
                 Suivi des commandes
@@ -184,7 +185,7 @@ function Admin(props) {
                         <input type="number" className="form-control" name="stock" placeholder="stock" onChange={(e) => handleChange(e)} />
                     </div>
 
-                    <button type="submit" className="submitButton" onClick={()=>{handleAddAlbum(newProduct)}}>Ajouter</button>
+                    <button className="submitButton" onClick={()=>{handleAddAlbum(newProduct)}}>Ajouter</button>
                 </form>
             </div>
     </div>

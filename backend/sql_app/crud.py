@@ -367,8 +367,12 @@ def add_album(db: Session, album):
         new_artist = models.Artist(name=album.artist)
         db.add(new_artist)
         db.commit()
+        
+        artist_id = (
+        db.query(models.Artist).filter(models.Artist.name.ilike(album.artist)).first()
+    )
 
-    print("exists", exists)
+    print("##################### exists", exists)
     if exists:
         return {"message": "Album already in db"}
 
@@ -383,6 +387,8 @@ def add_album(db: Session, album):
 
     db.add(album_to_add)
     db.commit()
+    
+    print("##################### album added", album_to_add)
 
     return {"message": "Album added"}
 
