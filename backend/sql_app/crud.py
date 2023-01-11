@@ -409,6 +409,14 @@ def delete_order(db: Session, order_id):
     """
     Delete an order with a giving id
     """
+    print("order id ==", order_id)
+    
+    order_items = db.query(models.Orders_items).filter(models.Orders_items.orders_id == order_id).all()
+    
+    for item in order_items:
+        db.delete(item)
+        db.commit()
+    
     order = db.query(models.Orders).filter(models.Orders.id == order_id).first()
 
     if order is None:
