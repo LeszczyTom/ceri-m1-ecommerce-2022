@@ -10,41 +10,27 @@ export const CartProvider = ({ children }) => {
     const userId = cookies.get("role");
 
     const addToCart = (albumid) => {
-        /*if (cart.find((cartItem) => cartItem.id === item.id && cartItem.quantity < item.stock)) {
-            setCart(
-                cart.map((cartItem) => {
-                    if (cartItem.id === item.id) {
-                        return {
-                            ...cartItem,
-                            quantity: cartItem.quantity + 1,
-                        };
-                    } else {
-                        return cartItem;
-                    }
+        if (userId && userId  !== 'admin') {
+            fetch(process.env.REACT_APP_SERVER_URL + '/add_album_cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    quantity: 1,
+                    user_id: userId,
+                    albums_id: albumid
                 })
-            );
-        } 
-        
-        else if (cart.find((cartItem) => cartItem.id === item.id && cartItem.stock === item.stock)) {
-            alert("Vous avez atteint la limite de stock disponible pour cet article");
-        } else {
-            setCart([...cart, { ...item, quantity: 1 }]);
-        }*/
-        fetch(process.env.REACT_APP_SERVER_URL + '/add_album_cart', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                quantity: 1,
-                user_id: userId,
-                albums_id: albumid
+            }).then(response => response.json())
+            .then(data => {
+                console.log("add album to cart = ", data)
+                window.location.reload();
             })
-        }).then(response => response.json())
-        .then(data => {
-            console.log("add album to cart = ", data)
-            window.location.reload();
-        })
+        }
+
+        else {
+            alert("Connecetz-vous en tant qu'utilisateur pour ajouter un album au panier");
+        }
     };
     
     const removeFromCart = (albumid, quantity) => {

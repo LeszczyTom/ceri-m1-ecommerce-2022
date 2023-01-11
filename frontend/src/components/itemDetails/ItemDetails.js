@@ -65,6 +65,7 @@ export default function ItemDetails() {
                     <div className="priceSong">
                         <p>{thisAlbum.price}€</p>
                     </div>
+                    <p>Stock : {thisAlbum.stock}</p>
                     <p className="addToCartBtn" onClick={()=>{handleCart(thisAlbum.id)}}>Ajouter au panier</p>
                 </div>
             </div>

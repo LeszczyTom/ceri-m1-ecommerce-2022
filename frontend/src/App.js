@@ -26,6 +26,12 @@ function App() {
   }
 
   const updateInput = async (input) => {
+
+
+    /**
+     * TODO : Algolia search
+     */
+
     const filtered = recordsList.filter(record => {
      return record.title.toLowerCase().includes(input.toLowerCase())
     })

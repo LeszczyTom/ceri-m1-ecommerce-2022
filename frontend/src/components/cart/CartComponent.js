@@ -39,7 +39,10 @@ function Cart() {
         return (
             
             <div className="cart">
-                <p>Votre panier est vide</p>
+                <div style={{width:"50%", textAlign:"center", margin:"auto"}}>
+                    <p>Votre panier est vide</p>
+                    <button type="submit" className="submitButton" onClick={()=>{window.location.href="/"}}>Boutique</button>
+                </div>
             </div>
         );
     }

@@ -23,7 +23,7 @@ export default function VinylCard(props) {
                 <div className='itemDescription'>
                 <Link to={`/product/${props.record.id}`}>
                     <div className='headerItem'>
-                        <div><h3 className='productName'>{props.record.title} - {props.record.year}</h3></div>
+                        <div><h3 className='productName'>{props.record.name} - {props.record.year}</h3></div>
                         <div className='favBtn'> <IoHeartOutline size={25}/> </div>
                     </div>
                     <div><p className='productName'>{props.record.album}</p></div>

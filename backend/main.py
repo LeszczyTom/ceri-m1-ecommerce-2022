@@ -17,14 +17,6 @@ origins = [
     "*",
 ]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 # Dependency
 def get_db():
     db = SessionLocal()
@@ -197,3 +189,11 @@ def search(body: schemas.Search_txt, db: Session = Depends(get_db)):
     index = client.init_index("catalogue_albums")
     results = index.search(txt)["hits"]
     return results
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)

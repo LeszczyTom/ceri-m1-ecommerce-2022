@@ -185,7 +185,7 @@ function UserForm() {
                     <h1>Bienvenue sur PinkZebra</h1>
                     
                     <div className='page-title'>
-                        Suivi des commandes
+                        Mes commandes
                     </div>
                     
                     <div className="ordersListContainer">
