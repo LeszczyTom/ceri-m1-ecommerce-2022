@@ -8,11 +8,7 @@ import sql_app.schemas as schemas
 from sql_app.database import SessionLocal, engine
 
 from algoliasearch.search_client import SearchClient
-client = SearchClient.create("3STRLEGLVZ", "651ad3c41669fe50406748555ef5febd")
-
-
-from algoliasearch.search_client import SearchClient
-client = SearchClient.create("3STRLEGLVZ", "651ad3c41669fe50406748555ef5febd")
+client = SearchClient.create("3STRLEGLVZ", "a9c3ef1349d8b0c40c9a2b7381400edb")
 
 
 app = FastAPI()
