@@ -55,7 +55,7 @@ const Navbar = (props) => {
           /> */}
             {/* <IoSearchOutline className='search' size={25}/> */}
             
-            <Link to={cookies.get('role')==="admin" ? "/user-form" : "/backoffice"}>
+            <Link to={cookies.get('role')==="admin" ? "/backoffice" : "/user-form"}>
               <IoPersonOutline className='profile' size={25}/>
             </Link>
             <Link to={"/cart"}><IoCartOutline size={25}/>
