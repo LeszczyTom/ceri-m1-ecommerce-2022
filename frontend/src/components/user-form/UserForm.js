@@ -1,6 +1,7 @@
 import './userForm.css';
 import React, { useState, useEffect } from 'react';
 import Cookies from 'universal-cookie';
+import { Navigate, redirect, useNavigate } from "react-router-dom";
 
 function UserForm() {
 
@@ -18,6 +19,7 @@ function UserForm() {
     const [userId, serUserId] = useState('');
 
     const cookies = new Cookies();
+    const navigate = useNavigate();
 
     useEffect( () => {
         if(sessionStorage.getItem('userStatus') === null) {
@@ -57,7 +59,11 @@ function UserForm() {
                 sessionStorage.setItem('userStatus', "true");
                 cookies.set('role', JSON.stringify(data), { path: '/' });
                 cookies.set('role', data, { path: '/' });
-                data === 'admin' ? window.location.href = '/backoffice' : window.location.href = '/user-form';
+                if(data === 'admin') {
+                    navigate('/backoffice')
+                } else {
+                    navigate('/user-form')
+                }
             }
             else {
                 alert("Email ou mot de passe incorrect");
@@ -95,7 +101,7 @@ function UserForm() {
         setuserLogged("false");
         sessionStorage.setItem('userStatus', "false");
         cookies.remove('role', { path: '/' });
-        window.location.reload();
+        navigate("/user-form");
     }
 
 
@@ -208,8 +214,8 @@ function UserForm() {
                         </div>
                     </div>     
                     
-                    <button type="submit" className="submitButton" onClick={()=>{window.location.href="/"}}>Boutique</button>
-                    <button type="submit" className="submitButton" onClick={()=>{window.location.href="/cart"}}>Panier</button>
+                    <button type="submit" className="submitButton" onClick={()=>{navigate("/")}}>Boutique</button>
+                    <button type="submit" className="submitButton" onClick={()=>{navigate("/cart")}}>Panier</button>
                     <button type="submit" className="submitButton" onClick={handleSignout}>Déconnexion</button>
                 </div>
             </div>

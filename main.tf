@@ -108,7 +108,7 @@ resource "google_cloud_run_service" "pinkzebra_frontend" {
     spec {
       service_account_name = "terraform-pinkzebra@ceri-m1-ecommerce-2022.iam.gserviceaccount.com"
       containers {
-        image = "europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/pinkzebra/frontend:1.1.1"
+        image = "europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/pinkzebra/frontend:1.1.2"
       }
     }
   }
