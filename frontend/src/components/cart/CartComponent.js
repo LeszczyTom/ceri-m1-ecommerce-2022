@@ -3,12 +3,14 @@ import { useContext } from 'react';
 import { CartContext } from '../../CartContext';
 import { useEffect, useState } from 'react';
 import Cookies from 'universal-cookie';
+import { useNavigate } from 'react-router-dom';
 
 function Cart() {
     const [allAlbums, setAllAlbums] = useState([]);
     const { cart, total, addToCart, clearItem, removeFromCart, clearCart } = useContext(CartContext);
     const cookies = new Cookies();
     const userId = cookies.get('role');
+    const navigate = useNavigate();
 
     const handleBuy = () => {
         if(userId) {
@@ -21,7 +23,7 @@ function Cart() {
             .then(data => {
                 console.log("buy = ", data)
                 alert("Votre commande a bien été prise en compte, retrouvez votre commande dans votre espace client");
-                window.location.reload();
+                navigate("/user-form");
             })
         }
     }
@@ -41,7 +43,7 @@ function Cart() {
             <div className="cart">
                 <div style={{width:"50%", textAlign:"center", margin:"auto"}}>
                     <p>Votre panier est vide</p>
-                    <button type="submit" className="submitButton" onClick={()=>{window.location.href="/"}}>Boutique</button>
+                    <button type="submit" className="submitButton" onClick={()=>{navigate("/")}}>Boutique</button>
                 </div>
             </div>
         );

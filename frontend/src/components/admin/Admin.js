@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import AdminVinylCard from './AdminVinylCard';
 import { IoTrashBinOutline, IoCheckmarkOutline } from "react-icons/io5";
 import Cookies from 'universal-cookie'
+import { useNavigate } from 'react-router-dom';
 
 
 function Admin(props) {
@@ -23,6 +24,7 @@ function Admin(props) {
     });
 
     const cookies = new Cookies();
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setNewProduct({
@@ -71,7 +73,7 @@ function Admin(props) {
             body: JSON.stringify(newProduct)
         }).then(response => response.json())
         .then(data => {
-            console.log(newProduct)
+            console.log("add album = ", data)
             // window.location.reload();
         })
     }
@@ -80,7 +82,7 @@ function Admin(props) {
         e.preventDefault();
         sessionStorage.setItem('userStatus', "false");
         cookies.remove('role', { path: '/' });
-        window.location.reload();
+        navigate('/user-form')
     }
 
     useEffect(() => {
