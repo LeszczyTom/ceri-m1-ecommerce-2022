@@ -1,6 +1,6 @@
 import './App.css';
 import ItemDetails from './components/itemDetails/ItemDetails';
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom"
+import {HashRouter as Router, Route, Routes} from "react-router-dom"
 import ProductsList from './components/productsList/ProductsList';
 import Footer from './components/footer/Footer';
 import UserForm from './components/user-form/UserForm';
