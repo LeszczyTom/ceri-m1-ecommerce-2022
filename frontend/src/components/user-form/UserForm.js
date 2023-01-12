@@ -59,7 +59,11 @@ function UserForm() {
                 sessionStorage.setItem('userStatus', "true");
                 cookies.set('role', JSON.stringify(data), { path: '/' });
                 cookies.set('role', data, { path: '/' });
-                data === 'admin' ? redirect('/backoffice') : redirect('/user-form');
+                if(data === 'admin') {
+                    navigate('/backoffice')
+                } else {
+                    navigate('/user-form')
+                }
             }
             else {
                 alert("Email ou mot de passe incorrect");
