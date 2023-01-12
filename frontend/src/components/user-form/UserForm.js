@@ -57,7 +57,7 @@ function UserForm() {
                 sessionStorage.setItem('userStatus', "true");
                 cookies.set('role', JSON.stringify(data), { path: '/' });
                 cookies.set('role', data, { path: '/' });
-                data === 'admin' ? window.location.href = '/backoffice' : window.location.href = '/user-form';
+                window.location.href = '/';
             }
             else {
                 alert("Email ou mot de passe incorrect");
