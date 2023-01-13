@@ -9,9 +9,11 @@ import { useState } from 'react';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, SearchBox, Hits  } from 'react-instantsearch-hooks-web';
 import 'instantsearch.css/themes/satellite.css';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = (props) => {
 
+  const navigate = useNavigate();
   const cookies = new Cookie()
   const {cart} = useContext(CartContext)
   const [search, setSearch] = useState('');
@@ -25,7 +27,7 @@ const Navbar = (props) => {
 
   function Hit({ hit }) {
     return (
-      <a href={"/product/"+hit.objectID}><div >
+      <a onClick={() => navigate("/product/"+hit.objectID)}><div>
         {/* <img src={hit.image} alt={hit.name} /> */}
         <span>{hit.name}</span>
         {/* <h1>{hit.name}</h1>
