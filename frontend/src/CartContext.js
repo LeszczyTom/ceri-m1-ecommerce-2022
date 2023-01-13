@@ -25,7 +25,7 @@ export const CartProvider = ({ children }) => {
             }).then(response => response.json())
             .then(data => {
                 console.log("add album to cart = ", data)
-                navigate('/cart');
+                window.location.reload()
             })
         }
 
@@ -48,7 +48,7 @@ export const CartProvider = ({ children }) => {
         }).then(response => response.json())
         .then(data => {
             console.log("remove album from cart = ", data)
-            navigate('/cart');
+            window.location.reload()
         })
     };
 
