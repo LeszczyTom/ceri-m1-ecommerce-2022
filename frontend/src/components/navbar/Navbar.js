@@ -3,7 +3,7 @@ import './navbar.css';
 import { IoCartOutline, IoSearchOutline, IoPersonOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { CartContext } from '../../CartContext';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import Cookie from 'universal-cookie';
 import { useState } from 'react';
 import algoliasearch from 'algoliasearch/lite';
@@ -16,6 +16,7 @@ const Navbar = (props) => {
   const {cart} = useContext(CartContext)
   const [search, setSearch] = useState('');
   const [showHits, setShowHits] = useState(false);
+  const [path, setPath] = useState('');
 
   const searchClient = algoliasearch(
     '3STRLEGLVZ',
@@ -32,6 +33,15 @@ const Navbar = (props) => {
       </div></a>
     );
   }
+
+  useEffect(() => {
+    if (cookies.get('role') === 'admin') {
+      setPath('/backoffice')
+    }
+    else {
+      setPath('/user-form')
+    }
+  }, [])
 
   return (
     <div className="navbar">
@@ -55,7 +65,7 @@ const Navbar = (props) => {
           /> */}
             {/* <IoSearchOutline className='search' size={25}/> */}
             
-            <Link to={cookies.get('role')==="admin" ? "/backoffice" : "/user-form"}>
+            <Link to={path}>
               <IoPersonOutline className='profile' size={25}/>
             </Link>
             <Link to={"/cart"}><IoCartOutline size={25}/>
