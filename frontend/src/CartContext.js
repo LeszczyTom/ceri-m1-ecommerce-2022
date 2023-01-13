@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import Cookies from "universal-cookie";
+import { useNavigate } from "react-router-dom";
 
 export const CartContext = createContext();
 
@@ -8,9 +9,9 @@ export const CartProvider = ({ children }) => {
     const [total, setTotal] = useState(0);
     const cookies = new Cookies();
     const userId = cookies.get("role");
-
+    const navigate = useNavigate();
     const addToCart = (albumid) => {
-        if (userId && userId  !== 'admin') {
+        if (cookies.get("role")  !== 'admin') {
             fetch(process.env.REACT_APP_SERVER_URL + '/add_album_cart', {
                 method: 'POST',
                 headers: {
@@ -24,12 +25,12 @@ export const CartProvider = ({ children }) => {
             }).then(response => response.json())
             .then(data => {
                 console.log("add album to cart = ", data)
-                window.location.reload();
+                navigate('/cart');
             })
         }
 
         else {
-            alert("Connecetz-vous en tant qu'utilisateur pour ajouter un album au panier");
+            alert("Connectez-vous en tant qu'utilisateur pour ajouter un album au panier");
         }
     };
     
@@ -47,7 +48,7 @@ export const CartProvider = ({ children }) => {
         }).then(response => response.json())
         .then(data => {
             console.log("remove album from cart = ", data)
-            window.location.reload();
+            navigate('/cart');
         })
     };
 
