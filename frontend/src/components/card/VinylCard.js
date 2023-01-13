@@ -9,6 +9,12 @@ export default function VinylCard(props) {
     const { addToCart } = useContext(CartContext);
     
     const handleCart = () => {
+        if(props.record.stock > 0){
+            addToCart(props.record.id)
+        }
+        else{
+            alert('Ce produit est en rupture de stock')
+        }
         addToCart(props.record.id)
     }
 
@@ -30,7 +36,7 @@ export default function VinylCard(props) {
                     </Link>
                     <div className='itemPrice'>
                         <div className='productPrice'>{props.record.price} €</div>
-                        <div className='cartBtn' onClick={handleCart} >Ajouter au panier</div>
+                        <div className='cartBtn' onClick={handleCart} >{props.record.stock > 0 ? 'Ajouter au panier' : 'Rupture de stock'}</div>
                     </div>
                 </div>
             </div>
