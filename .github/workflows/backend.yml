@@ -17,6 +17,7 @@ jobs:
           cache: "pip" # caching pip dependencies
       - run: |
           python -m pip install --upgrade pip
+          # NOTE: You can use working-directory to `backend` to prevent from contextual path issues :)
           pip install -r ./backend/requirements.txt
       - name: Run pytest
         run : |
@@ -34,6 +35,9 @@ jobs:
       - name: Login
         run: echo "${{ secrets.DOCKER_REGISTRY_PASSWORD }}" | docker login --username ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin ${{ secrets.DOCKER_REGISTRY }}
       - name: Build and push 
+        # NOTE: i would rather split this into two distinct steps so you know exactly what is failing (build or push)
+        #       also you can use a single VERSION file to read version number from and then only have one source of truth
+        #       for the version number.
         run: | 
           docker build -t ${{ secrets.DOCKER_REGISTRY }}/backend:1.1.7 ./backend --build-arg env=${{ secrets.ENV}}
           docker push ${{ secrets.DOCKER_REGISTRY }}/backend:1.1.7
